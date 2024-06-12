@@ -92,7 +92,8 @@ vim.keymap.set({"n"}, "<Leader>f", ":Files<Enter>", opts)
 vim.keymap.set({"x"}, "ga", "<Plug>(EasyAlign)", opts)
 vim.keymap.set({"n"}, "ga", "<Plug>(EasyAlign)", opts)
 vim.keymap.set({"n"}, "ff", "<cmd>lua vim.lsp.buf.format { async = true }<CR>", opts)
--- vim.keymap.set({"n"}, "<Leader>k", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
+vim.keymap.set({"n"}, "<Leader>k", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
+vim.keymap.set({"n"}, "<Leader>j", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
 vim.keymap.set({"n"}, "<S-Tab>", "<Plug>(cokeline-focus-prev)", { silent = true })
 vim.keymap.set({"n"}, "<Tab>", "<Plug>(cokeline-focus-next)", { silent = true })
 vim.keymap.set({"n"}, "<Leader>p", "<Plug>(cokeline-switch-prev)", { silent = true })
@@ -182,7 +183,12 @@ require("lazy").setup({
       })
 
 
-
+      vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
+      vim.lsp.handlers.hover, {
+          border = "none",
+          width = 100 
+        }
+      )
       vim.api.nvim_create_autocmd("LspAttach", {
         callback = function(args)
           local bufnr = args.buf
