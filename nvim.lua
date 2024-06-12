@@ -12,12 +12,12 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 vim.cmd[[
-  autocmd FileType python,c,shell,bash,vim,cpp set sw=4
-  autocmd FileType python,c,shell,bash,vim,cpp set ts=4
-  autocmd FileType python,c,shell,bash,vim,cpp set sts=4
-  autocmd FileType tex,lua set sw=2
-  autocmd FileType tex,lua set ts=2
-  autocmd FileType tex,lua set sts=2
+  autocmd filetype python,c,shell,bash,vim,cpp set sw=4
+  autocmd filetype python,c,shell,bash,vim,cpp set ts=4
+  autocmd filetype python,c,shell,bash,vim,cpp set sts=4
+  autocmd filetype tex,lua set sw=2
+  autocmd filetype tex,lua set ts=2
+  autocmd filetype tex,lua set sts=2
   syntax on
   filetype on
   filetype indent on
@@ -25,7 +25,7 @@ vim.cmd[[
   filetype plugin indent on
 ]]
 vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1
+vim.g.loaded_netrwplugin = 1
 vim.opt.termguicolors = true
 vim.opt.fileformat = "unix"
 vim.opt.fileformats = { "unix" }
@@ -60,46 +60,44 @@ vim.opt.autochdir = true
 vim.opt.cursorline = true
 vim.opt.termguicolors = true
 vim.opt.wildoptions = "pum"
-vim.opt.pumblend = 5
+vim.opt.pumblend = 30
 vim.opt.pumheight = 8
-vim.o.completeopt = "menu,menuone,noselect"
+vim.opt.completeopt = "menu,menuone,noselect"
+vim.o.whichwrap = vim.o.whichwrap .. "<,>,h,l"
 
 local opt = { noremap = true, silent = true }
 vim.g.mapleader = " "
-vim.keymap.set("i", "jk", "<esc>", opt)
-vim.keymap.set("n", "H", "5h", opt)
-vim.keymap.set("n", "J", "5j", opt)
-vim.keymap.set("n", "K", "5k", opt)
-vim.keymap.set("n", "L", "5l", opt)
-vim.keymap.set("n", "<leader>v", "<C-v>", opt)
-vim.keymap.set("n", "<leader>t", ":NvimTreeToggle<Return>", opt)
-vim.keymap.set("n", "n", "nzz", opt)
-vim.keymap.set("n", "N", "Nzz", opt)
-vim.keymap.set("n", "S", ":w<Return>", opt)
-vim.keymap.set("n", "Q", ":q<Return>", opt)
--- vim.keymap.set("n", "<S-Tab>", ":tabprev<Return>", opts)
--- vim.keymap.set("n", "<Tab>", ":tabnext<Return>", opts)
-vim.keymap.set("n", "ss", ":split<Return><C-w>w", opts)
-vim.keymap.set("n", "sv", ":vsplit<Return><C-w>w", opts)
-vim.keymap.set("n", "<Space>", "<C-w>w", opts)
-vim.keymap.set("n", "sq", "<C-w>q", opts)
-vim.keymap.set("n", "sh", "<C-w>h", opts)
-vim.keymap.set("n", "sk", "<C-w>k", opts)
-vim.keymap.set("n", "sj", "<C-w>j", opts)
-vim.keymap.set("n", "sl", "<C-w>l", opts)
-vim.keymap.set("n", "s<left>", "<C-w>5<", opts)
-vim.keymap.set("n", "s<right>", "<C-w>5>", opts)
-vim.keymap.set("n", "s<up>", "<C-w>5+", opts)
-vim.keymap.set("n", "s<down>", "<C-w>-", opts)
-vim.keymap.set("n", "<Leader>f", ":Files<Enter>", opts)
-vim.keymap.set("x", "ga", "<Plug>(EasyAlign)", opts)
-vim.keymap.set("n", "ga", "<Plug>(EasyAlign)", opts)
-vim.keymap.set("n", "ff", "<cmd>lua vim.lsp.buf.format { async = true }<CR>", opts)
-vim.keymap.set("n", "<Leader>k", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
-vim.keymap.set("n", "<S-Tab>", "<Plug>(cokeline-focus-prev)", { silent = true })
-vim.keymap.set("n", "<Tab>", "<Plug>(cokeline-focus-next)", { silent = true })
-vim.keymap.set("n", "<Leader>p", "<Plug>(cokeline-switch-prev)", { silent = true })
-vim.keymap.set("n", "<Leader>n", "<Plug>(cokeline-switch-next)", { silent = true })
+vim.keymap.set({"i", "v"}, "jk", "<esc>", opt)
+vim.keymap.set({"n"}, "H", "<s-up>", opt)
+vim.keymap.set({"n"}, "L", "<s-down>", opt)
+vim.keymap.set({"n"}, "<leader>v", "<c-v>", opt)
+vim.keymap.set({"n"}, "<leader>t", ":nvimtreetoggle<return>", opt)
+vim.keymap.set({"n"}, "n", "nzz", opt)
+vim.keymap.set({"n"}, "N", "Nzz", opt)
+vim.keymap.set({"n"}, "S", ":w<Return>", opt)
+vim.keymap.set({"n"}, "Q", ":q<Return>", opt)
+vim.keymap.set({"n"}, "ss", ":split<Return><C-w>w", opts)
+vim.keymap.set({"n"}, "sv", ":vsplit<Return><C-w>w", opts)
+vim.keymap.set({"n"}, "<Space>", "<C-w>w", opts)
+vim.keymap.set({"n"}, "sq", "<C-w>q", opts)
+vim.keymap.set({"n"}, "sh", "<C-w>h", opts)
+vim.keymap.set({"n"}, "sk", "<C-w>k", opts)
+vim.keymap.set({"n"}, "sj", "<C-w>j", opts)
+vim.keymap.set({"n"}, "sl", "<C-w>l", opts)
+vim.keymap.set({"n"}, "s<left>", "<C-w>5<", opts)
+vim.keymap.set({"n"}, "s<right>", "<C-w>5>", opts)
+vim.keymap.set({"n"}, "s<up>", "<C-w>5+", opts)
+vim.keymap.set({"n"}, "s<down>", "<C-w>-", opts)
+vim.keymap.set({"n"}, "<Leader>f", ":Files<Enter>", opts)
+vim.keymap.set({"x"}, "ga", "<Plug>(EasyAlign)", opts)
+vim.keymap.set({"n"}, "ga", "<Plug>(EasyAlign)", opts)
+vim.keymap.set({"n"}, "ff", "<cmd>lua vim.lsp.buf.format { async = true }<CR>", opts)
+-- vim.keymap.set({"n"}, "<Leader>k", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
+vim.keymap.set({"n"}, "<S-Tab>", "<Plug>(cokeline-focus-prev)", { silent = true })
+vim.keymap.set({"n"}, "<Tab>", "<Plug>(cokeline-focus-next)", { silent = true })
+vim.keymap.set({"n"}, "<Leader>p", "<Plug>(cokeline-switch-prev)", { silent = true })
+vim.keymap.set({"n"}, "<Leader>n", "<Plug>(cokeline-switch-next)", { silent = true })
+vim.keymap.set({"n"}, "<Leader>d", ":bd<Return>", { silent = true })
 
 require("lazy").setup({
   {
@@ -249,7 +247,7 @@ require("lazy").setup({
   { "folke/todo-comments.nvim", dependencies = { "nvim-lua/plenary.nvim" } },
   { "RRethy/vim-illuminate" },
   { "junegunn/vim-easy-align" },
-  { "karb94/neoscroll.nvim" },
+  -- { "karb94/neoscroll.nvim" },
   { "lukas-reineke/indent-blankline.nvim", config = function() require("ibl").setup {} end, },
   { 
     "morhetz/gruvbox", 
