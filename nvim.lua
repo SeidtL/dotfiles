@@ -12,12 +12,12 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 vim.cmd[[
-  autocmd FileType python,c,shell,bash,vim,cpp,lua set sw=4
-  autocmd FileType python,c,shell,bash,vim,cpp,lua set ts=4
-  autocmd FileType python,c,shell,bash,vim,cpp,lua set sts=4
-  autocmd FileType tex set sw=2
-  autocmd FileType tex set ts=2
-  autocmd FileType tex set sts=2
+  autocmd FileType python,c,shell,bash,vim,cpp set sw=4
+  autocmd FileType python,c,shell,bash,vim,cpp set ts=4
+  autocmd FileType python,c,shell,bash,vim,cpp set sts=4
+  autocmd FileType tex,lua set sw=2
+  autocmd FileType tex,lua set ts=2
+  autocmd FileType tex,lua set sts=2
   syntax on
   filetype on
   filetype indent on
@@ -200,21 +200,45 @@ require("lazy").setup({
           }, bufnr)
         end,
       })
-      local lsp_servers = {"clangd", "pyright", "texlab"}
+      -- LSP server setup 
       require("mason").setup()
-      require("mason-lspconfig").setup {
-        ensure_installed = lsp_servers
-      }
-      -- Setup lspconfig.
       local capabilities = require("cmp_nvim_lsp").default_capabilities()
       local lspconfig = require("lspconfig")
-      for i,lsp_server in ipairs(lsp_servers) do
-        lspconfig[lsp_server].setup { capabilities = capabilities }
+      local lsp_servers = {
+        clangd = { capabilities = capabilities }, 
+        pyright = { capabilities = capabilities }, 
+        texlab = { 
+          capabilities = capabilities, 
+          settings = {
+            texlab = {
+              build = {
+                executable = "latexmk",
+                args = {"-pdf", "-interaction=nonstopmode", "-synctex=1", "%f"},
+                onSave = true
+              },
+              forwardSearch = {
+                executable = "SumatraPDF",
+                args = {"-reuse-instance", "%p", "-forward-search", "%f", "%l"}, 
+              }, 
+            }
+          }
+        }
+      }
+      local lsp_names = {}
+      for k, _ in pairs(lsp_servers) do 
+        table.insert(lsp_names, k)
+      end
+      require("mason-lspconfig").setup {
+        ensure_installed = lsp_names
+      }
+      -- Setup lspconfig.
+      for lsp_server, cfg in pairs(lsp_servers) do
+        lspconfig[lsp_server].setup(cfg)
       end
     end
   },
   {"machakann/vim-sandwich", lazy = true},
-  {"jiangmiao/auto-pairs"},
+  { "windwp/nvim-autopairs", event = "InsertEnter", config = true, },
   {
     "nvim-tree/nvim-tree.lua",
     dependencies = { "kyazdani42/nvim-web-devicons" },
@@ -227,8 +251,6 @@ require("lazy").setup({
   { "junegunn/vim-easy-align" },
   { "karb94/neoscroll.nvim" },
   { "lukas-reineke/indent-blankline.nvim", config = function() require("ibl").setup {} end, },
-  -- { "vim-airline/vim-airline", },
-  -- { "vim-airline/vim-airline-themes" }, 
   { 
     "morhetz/gruvbox", 
     config = function()
@@ -244,6 +266,14 @@ require("lazy").setup({
   --
   --   end,
   -- },
-  { 'nvim-lualine/lualine.nvim', dependencies = { 'nvim-tree/nvim-web-devicons' }, opts = { options = { theme = "gruvbox" } } }, 
-  { "willothy/nvim-cokeline", dependencies = { "nvim-tree/nvim-web-devicons", "nvim-lua/plenary.nvim" }, config = true },
+  { 
+    'nvim-lualine/lualine.nvim', 
+    dependencies = { 'nvim-tree/nvim-web-devicons' }, 
+    opts = { options = { theme = "gruvbox" } } 
+  }, 
+  { 
+    "willothy/nvim-cokeline", 
+    dependencies = { "nvim-tree/nvim-web-devicons", "nvim-lua/plenary.nvim" }, 
+    config = true 
+  },
 })
