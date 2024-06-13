@@ -250,7 +250,7 @@ require("lazy").setup({
   },
   { "junegunn/fzf", dir = "~/.fzf", build = "./install --all", },
   { "junegunn/fzf.vim", },
-  { "folke/todo-comments.nvim", dependencies = { "nvim-lua/plenary.nvim" } },
+  { "folke/todo-comments.nvim", dependencies = { "nvim-lua/plenary.nvim" }, config = true },
   { "RRethy/vim-illuminate" },
   { "junegunn/vim-easy-align" },
   -- { "karb94/neoscroll.nvim" },
