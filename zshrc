@@ -1,7 +1,14 @@
 _FZF_FIND_CMD=fd
+_FZF_DOC_ROOT_DIR="/usr/share/fzf"
+_FZF_EXCLUDE_FOLDER="venv,.config,.git,.local"
+CUDA_INSTALL_PATH=/opt/cuda
+
 HISTSIZE=1000
 SAVEHIST=1000
 HISTFILE=~/.zsh_history
+
+export CRYPTOGRAPHY_OPENSSL_NO_LEGACY=1
+export PATH="$PATH:/usr/bin"
 
 alias vi="nvim"
 alias ssh="TERM=xterm-256color ssh"
@@ -9,7 +16,6 @@ alias ssh="TERM=xterm-256color ssh"
 setopt histignorealldups sharehistory
 bindkey -e
 
-export PATH="$PATH:/usr/bin"
 ######################## COMPLETION #####################
 # Use modern completion system
 autoload -Uz compinit
@@ -30,31 +36,11 @@ zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 
 
 ####################### CUDA #########################
-CUDA_INSTALL_PATH=/usr/local/cuda-12.4
 if [[ -e $CUDA_INSTALL_PATH ]]; then 
     export PATH=$PATH:$CUDA_INSTALL_PATH/bin
     export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CUDA_INSTALL_PATH/lib64
 fi
 unset CUDA_INSTALL_PATH
-
-###################### FZF ##############################
-export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border'
-export FZF_DEFAULT_COMMAND="${_FZF_FIND_CMD} --type f --strip-cwd-prefix --follow --exclude venv"
-_FZF_DOC_ROOT_DIR="/usr/share/fzf"
-source $_FZF_DOC_ROOT_DIR/completion.zsh
-source $_FZF_DOC_ROOT_DIR/key-bindings.zsh
-unset _FZF_DOC_ROOT_DIR
-
-
-############################# PYENV #########################
-python_venv() {
-    MYVENV=./venv/
-    [[ -d $MYVENV ]] && source $MYVENV/bin/activate > /dev/null 2>&1
-    [[ ! -d $MYVENV ]] && deactivate > /dev/null 2>&1
-}
-autoload -U add-zsh-hook
-add-zsh-hook chpwd python_venv
-python_venv
 
 
 ########################### ZINIT ###################################
@@ -118,5 +104,32 @@ else
 fi
 unset __conda_setup
 # <<< conda initialize <<<
-export CRYPTOGRAPHY_OPENSSL_NO_LEGACY=1
+
+
+############################# PYENV #########################
+python_venv() {
+    MYVENV=./venv/
+    [[ -d $MYVENV ]] && source $MYVENV/bin/activate > /dev/null 2>&1
+    [[ ! -d $MYVENV ]] && deactivate > /dev/null 2>&1
+}
+autoload -U add-zsh-hook
+add-zsh-hook chpwd python_venv
+python_venv
+
+
+###################### FZF ##############################
+_FZF_COLOR_THEME_LIGHT=" --color=bg+:#ebdbb2,bg:#fbf1c7,spinner:#427b58,hl:#076678"\
+" --color=fg:#665c54,header:#076678,info:#b57614,pointer:#427b58"\
+" --color=marker:#427b58,fg+:#3c3836,prompt:#b57614,hl+:#076678"
+_FZF_COLOR_THEME_DARK=" --color=bg+:#3c3836,bg:#282828,spinner:#8ec07c,hl:#83a598"\
+" --color=fg:#bdae93,header:#83a598,info:#fabd2f,pointer:#8ec07c"\
+" --color=marker:#8ec07c,fg+:#ebdbb2,prompt:#fabd2f,hl+:#83a598"
+_FZF_PREFIX_DEFAULT_OPT='--height 40% --layout=reverse --border'
+export FZF_DEFAULT_OPTS="$_FZF_PREFIX_DEFAULT_OPT $_FZF_COLOR_THEME_LIGHT"
+unset _FZF_COLOR_THEME_LIGHT _FZF_COLOR_THEME_DARK _FZF_PREFIX_DEFAULT_OPT
+
+export FZF_DEFAULT_COMMAND="${_FZF_FIND_CMD} --type f --strip-cwd-prefix --follow --exclude=$_FZF_EXCLUDE_FOLDER"
+source $_FZF_DOC_ROOT_DIR/completion.zsh
+source $_FZF_DOC_ROOT_DIR/key-bindings.zsh
+unset _FZF_DOC_ROOT_DIR _FZF_EXCLUDE_FOLDER _FZF_DOC_ROOT_DIR
 

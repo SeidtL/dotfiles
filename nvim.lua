@@ -99,6 +99,7 @@ vim.keymap.set({"n"}, "<S-Tab>", "<Plug>(cokeline-focus-prev)", { silent = true 
 vim.keymap.set({"n"}, "<Tab>", "<Plug>(cokeline-focus-next)", { silent = true })
 vim.keymap.set({"n"}, "<Leader>p", "<Plug>(cokeline-switch-prev)", { silent = true })
 vim.keymap.set({"n"}, "<Leader>n", "<Plug>(cokeline-switch-next)", { silent = true })
+vim.keymap.set({"n"}, "<Leader>n", "<Plug>(cokeline-switch-next)", { silent = true })
 vim.keymap.set({"n"}, "<Leader>d", ":bd<Return>", { silent = true })
 
 require("lazy").setup({
@@ -217,7 +218,6 @@ require("lazy").setup({
           settings = {
             texlab = {
               build = {
-                executable = "latexmk",
                 args = {"-pdf", "-interaction=nonstopmode", "-synctex=1", "%f"},
                 onSave = true
               },
@@ -246,10 +246,10 @@ require("lazy").setup({
   { "windwp/nvim-autopairs", event = "InsertEnter", config = true, },
   {
     "nvim-tree/nvim-tree.lua",
-    dependencies = { "kyazdani42/nvim-web-devicons" },
+    dependencies = { "nvim-tree/nvim-web-devicons" },
     opts = { on_attach = on_attach_change },
   },
-  { "junegunn/fzf", dir = "~/.fzf", build = "./install --all", },
+  { "junegunn/fzf" },
   { "junegunn/fzf.vim", },
   { "folke/todo-comments.nvim", dependencies = { "nvim-lua/plenary.nvim" }, config = true },
   { "RRethy/vim-illuminate" },
