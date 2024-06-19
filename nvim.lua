@@ -26,6 +26,7 @@ vim.cmd[[
 ]]
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwplugin = 1
+vim.opt.wrap = false
 vim.opt.termguicolors = true
 vim.opt.fileformat = "unix"
 vim.opt.fileformats = { "unix" }
@@ -260,6 +261,7 @@ require("lazy").setup({
     config = function()
       vim.cmd.colorscheme("gruvbox") 
       vim.g.airline_theme = "gruvbox"
+      vim.opt.background = "light"
     end 
   },
   -- {

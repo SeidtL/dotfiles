@@ -1,26 +1,19 @@
-alias subl="$WINHOME/Software/Sublime\ Text/subl.exe"
-alias code="$WINHOME/software/Microsoft\ VS\ Code/bin/code"
-alias wopen="/mnt/c/Windows/explorer.exe"
-alias ipython="python3 -m IPython"
-
-
-_FZF_FIND_CMD=fdfind
+_FZF_FIND_CMD=fd
 HISTSIZE=1000
 SAVEHIST=1000
 HISTFILE=~/.zsh_history
+
 alias vi="nvim"
+alias ssh="TERM=xterm-256color ssh"
 
 setopt histignorealldups sharehistory
 bindkey -e
 
-
+export PATH="$PATH:/usr/bin"
 ######################## COMPLETION #####################
 # Use modern completion system
 autoload -Uz compinit
 compinit
-# zstyle ':completion:*' auto-description 'specify: %d'
-# zstyle ':completion:*' completer _expand _complete _correct _approximate
-# zstyle ':completion:*' format 'Completing %d'
 zstyle ':completion:*' group-name ''
 zstyle ':completion:*' menu select=2
 eval "$(dircolors -b)"
@@ -47,9 +40,10 @@ unset CUDA_INSTALL_PATH
 ###################### FZF ##############################
 export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border'
 export FZF_DEFAULT_COMMAND="${_FZF_FIND_CMD} --type f --strip-cwd-prefix --follow --exclude venv"
-source /usr/share/doc/fzf/examples/completion.zsh
-source /usr/share/doc/fzf/examples/key-bindings.zsh
-
+_FZF_DOC_ROOT_DIR="/usr/share/fzf"
+source $_FZF_DOC_ROOT_DIR/completion.zsh
+source $_FZF_DOC_ROOT_DIR/key-bindings.zsh
+unset _FZF_DOC_ROOT_DIR
 
 
 ############################# PYENV #########################
@@ -107,3 +101,22 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/opt/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/opt/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "/opt/miniconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/opt/miniconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+export CRYPTOGRAPHY_OPENSSL_NO_LEGACY=1
+
