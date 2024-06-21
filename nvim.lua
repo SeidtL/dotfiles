@@ -89,7 +89,7 @@ vim.keymap.set({"n"}, "s<left>", "<C-w>5<", opts)
 vim.keymap.set({"n"}, "s<right>", "<C-w>5>", opts)
 vim.keymap.set({"n"}, "s<up>", "<C-w>5+", opts)
 vim.keymap.set({"n"}, "s<down>", "<C-w>-", opts)
-vim.keymap.set({"n"}, "<Leader>f", ":Files<Enter>", opts)
+-- vim.keymap.set({"n"}, "<Leader>f", ":Files<Enter>", opts)
 vim.keymap.set({"x"}, "ga", "<Plug>(EasyAlign)", opts)
 vim.keymap.set({"n"}, "ga", "<Plug>(EasyAlign)", opts)
 vim.keymap.set({"n"}, "ff", "<cmd>lua vim.lsp.buf.format { async = true }<CR>", opts)
@@ -249,8 +249,19 @@ require("lazy").setup({
     dependencies = { "nvim-tree/nvim-web-devicons" },
     opts = { on_attach = on_attach_change },
   },
-  { "junegunn/fzf" },
-  { "junegunn/fzf.vim", },
+  -- { "junegunn/fzf" },
+  -- { "junegunn/fzf.vim", },
+  {
+    'nvim-telescope/telescope.nvim', tag = '0.1.6',
+    dependencies = { 'nvim-lua/plenary.nvim' }, 
+    config = function() 
+    local builtin = require('telescope.builtin')
+      vim.keymap.set("n", '<leader>ff', builtin.find_files, {})
+      vim.keymap.set("n", '<leader>fg', builtin.live_grep, {})
+      vim.keymap.set("n", '<leader>fb', builtin.buffers, {})
+      vim.keymap.set("n", '<leader>fh', builtin.help_tags, {})
+    end
+  },
   { "folke/todo-comments.nvim", dependencies = { "nvim-lua/plenary.nvim" }, config = true },
   { "RRethy/vim-illuminate" },
   { "junegunn/vim-easy-align" },
