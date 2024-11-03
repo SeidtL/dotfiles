@@ -68,7 +68,7 @@ vim.o.whichwrap = vim.o.whichwrap .. "<,>,h,l"
 
 local opt = { noremap = true, silent = true }
 vim.g.mapleader = " "
-vim.keymap.set({"i", "v"}, "jk", "<esc>", opt)
+vim.keymap.set({"i"}, "jk", "<esc>", opt)
 vim.keymap.set({"n"}, "H", "<s-up>", opt)
 vim.keymap.set({"n"}, "L", "<s-down>", opt)
 vim.keymap.set({"n"}, "<leader>v", "<c-v>", opt)
@@ -267,26 +267,25 @@ require("lazy").setup({
   { "junegunn/vim-easy-align" },
   -- { "karb94/neoscroll.nvim" },
   { "lukas-reineke/indent-blankline.nvim", config = function() require("ibl").setup {} end, },
-  { 
-    "morhetz/gruvbox", 
-    config = function()
-      vim.cmd.colorscheme("gruvbox") 
-      vim.g.airline_theme = "gruvbox"
-      vim.opt.background = "light"
-    end 
-  },
-  -- {
-  --   "embark-theme/vim",
+  -- { 
+  --   "morhetz/gruvbox", 
   --   config = function()
-  --     vim.cmd.colorscheme("embark")
-  --     vim.g.airline_theme = "embark"
-  --
-  --   end,
+  --     vim.cmd.colorscheme("gruvbox") 
+  --     vim.g.airline_theme = "gruvbox"
+  --     vim.opt.background = "dark"
+  --   end 
   -- },
+  {
+    "embark-theme/vim",
+    config = function()
+      vim.cmd.colorscheme("embark")
+      vim.g.airline_theme = "embark"
+    end,
+  },
   { 
     'nvim-lualine/lualine.nvim', 
     dependencies = { 'nvim-tree/nvim-web-devicons' }, 
-    opts = { options = { theme = "gruvbox" } } 
+    opts = { options = { theme = "embark" } } 
   }, 
   { 
     "willothy/nvim-cokeline", 

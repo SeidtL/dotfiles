@@ -1,17 +1,19 @@
 _FZF_FIND_CMD=fd
 _FZF_DOC_ROOT_DIR="/usr/share/fzf"
-_FZF_EXCLUDE_FOLDER="venv,.config,.git,.local"
+_FZF_EXCLUDE_FOLDER="venv,.config,.git,.local,.conda,.cargo,.rustup"
 CUDA_INSTALL_PATH=/opt/cuda
 
 HISTSIZE=1000
 SAVEHIST=1000
-HISTFILE=~/.zsh_history
+HISTFILE=~/.local/zsh_history
 
 export CRYPTOGRAPHY_OPENSSL_NO_LEGACY=1
 export PATH="$PATH:/usr/bin"
 
+alias open="dolphin"
 alias vi="nvim"
 alias ssh="TERM=xterm-256color ssh"
+alias ls="eza"
 
 setopt histignorealldups sharehistory
 bindkey -e
@@ -88,24 +90,6 @@ fi
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-
-
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/opt/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/opt/miniconda3/etc/profile.d/conda.sh" ]; then
-        . "/opt/miniconda3/etc/profile.d/conda.sh"
-    else
-        export PATH="/opt/miniconda3/bin:$PATH"
-    fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<
-
-
 ############################# PYENV #########################
 python_venv() {
     MYVENV=./venv/
@@ -125,7 +109,7 @@ _FZF_COLOR_THEME_DARK=" --color=bg+:#3c3836,bg:#282828,spinner:#8ec07c,hl:#83a59
 " --color=fg:#bdae93,header:#83a598,info:#fabd2f,pointer:#8ec07c"\
 " --color=marker:#8ec07c,fg+:#ebdbb2,prompt:#fabd2f,hl+:#83a598"
 _FZF_PREFIX_DEFAULT_OPT='--height 40% --layout=reverse --border'
-export FZF_DEFAULT_OPTS="$_FZF_PREFIX_DEFAULT_OPT $_FZF_COLOR_THEME_LIGHT"
+export FZF_DEFAULT_OPTS="$_FZF_PREFIX_DEFAULT_OPT $_FZF_COLOR_THEME_DARK"
 unset _FZF_COLOR_THEME_LIGHT _FZF_COLOR_THEME_DARK _FZF_PREFIX_DEFAULT_OPT
 
 export FZF_DEFAULT_COMMAND="${_FZF_FIND_CMD} --type f --strip-cwd-prefix --follow --exclude=$_FZF_EXCLUDE_FOLDER"
@@ -133,3 +117,5 @@ source $_FZF_DOC_ROOT_DIR/completion.zsh
 source $_FZF_DOC_ROOT_DIR/key-bindings.zsh
 unset _FZF_DOC_ROOT_DIR _FZF_EXCLUDE_FOLDER _FZF_DOC_ROOT_DIR
 
+
+source ~/.config/conda.zsh
