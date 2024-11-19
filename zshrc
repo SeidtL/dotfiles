@@ -1,17 +1,25 @@
-_FZF_FIND_CMD=fd
-_FZF_DOC_ROOT_DIR="/usr/share/fzf"
-_FZF_EXCLUDE_FOLDER="venv,.config,.git,.local"
+AUX_FZF_FIND_CMD=fdfind
+AUX_FZF_DOC_ROOT_DIR="/usr/share/doc/fzf/examples"
+AUX_FZF_EXCLUDE_FOLDER="venv,.config,.git,.local"
 CUDA_INSTALL_PATH=/opt/cuda
+alias wopen="/mnt/c/Windows/explorer.exe"
+alias code="$WINHOME/opt/Microsoft\ VS\ Code/bin/code"
+
+alias vi="nvim"
+alias ssh="TERM=xterm-256color ssh"
 
 HISTSIZE=1000
 SAVEHIST=1000
 HISTFILE=~/.zsh_history
 
-export CRYPTOGRAPHY_OPENSSL_NO_LEGACY=1
-export PATH="$PATH:/usr/bin"
+# rust 
+[[ ! -f $HOME/.cargo/env ]] || . "$HOME/.cargo/env"
 
-alias vi="nvim"
-alias ssh="TERM=xterm-256color ssh"
+# go 
+export GO111MODULE=on
+export GOPROXY=https://goproxy.cn
+export GOPATH=$HOME/.local/gohome
+
 
 setopt histignorealldups sharehistory
 bindkey -e
@@ -76,9 +84,6 @@ zinit snippet OMZ::plugins/git/git.plugin.zsh
 
 zinit ice depth"1" # git clone depth
 zinit light romkatv/powerlevel10k
-# zi cdclear -q # <- forget completions provided up to this moment
-# setopt promptsubst
-# zi snippet OMZT::robbyrussell
 ### End of Zinit's installer chunk
 
 ############################# P10K #############################
@@ -88,22 +93,6 @@ fi
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-
-
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/opt/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/opt/miniconda3/etc/profile.d/conda.sh" ]; then
-        . "/opt/miniconda3/etc/profile.d/conda.sh"
-    else
-        export PATH="/opt/miniconda3/bin:$PATH"
-    fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<
 
 
 ############################# PYENV #########################
@@ -118,18 +107,12 @@ python_venv
 
 
 ###################### FZF ##############################
-_FZF_COLOR_THEME_LIGHT=" --color=bg+:#ebdbb2,bg:#fbf1c7,spinner:#427b58,hl:#076678"\
-" --color=fg:#665c54,header:#076678,info:#b57614,pointer:#427b58"\
-" --color=marker:#427b58,fg+:#3c3836,prompt:#b57614,hl+:#076678"
-_FZF_COLOR_THEME_DARK=" --color=bg+:#3c3836,bg:#282828,spinner:#8ec07c,hl:#83a598"\
-" --color=fg:#bdae93,header:#83a598,info:#fabd2f,pointer:#8ec07c"\
-" --color=marker:#8ec07c,fg+:#ebdbb2,prompt:#fabd2f,hl+:#83a598"
-_FZF_PREFIX_DEFAULT_OPT='--height 40% --layout=reverse --border'
-export FZF_DEFAULT_OPTS="$_FZF_PREFIX_DEFAULT_OPT $_FZF_COLOR_THEME_LIGHT"
-unset _FZF_COLOR_THEME_LIGHT _FZF_COLOR_THEME_DARK _FZF_PREFIX_DEFAULT_OPT
+AUX_FZF_PREFIX_DEFAULT_OPT='--height 40% --layout=reverse --border'
+export FZF_DEFAULT_OPTS="$AUX_FZF_PREFIX_DEFAULT_OPT"
+unset AUX_FZF_PREFIX_DEFAULT_OPT
 
-export FZF_DEFAULT_COMMAND="${_FZF_FIND_CMD} --type f --strip-cwd-prefix --follow --exclude=$_FZF_EXCLUDE_FOLDER"
-source $_FZF_DOC_ROOT_DIR/completion.zsh
-source $_FZF_DOC_ROOT_DIR/key-bindings.zsh
-unset _FZF_DOC_ROOT_DIR _FZF_EXCLUDE_FOLDER _FZF_DOC_ROOT_DIR
+export FZF_DEFAULT_COMMAND="${AUX_FZF_FIND_CMD} --type f --strip-cwd-prefix --follow --exclude=$AUX_FZF_EXCLUDE_FOLDER"
+source $AUX_FZF_DOC_ROOT_DIR/completion.zsh
+source $AUX_FZF_DOC_ROOT_DIR/key-bindings.zsh
+unset AUX_FZF_DOC_ROOT_DIR AUX_FZF_EXCLUDE_FOLDER AUX_FZF_DOC_ROOT_DIR
 
