@@ -249,8 +249,6 @@ require("lazy").setup({
     dependencies = { "nvim-tree/nvim-web-devicons" },
     opts = { on_attach = on_attach_change },
   },
-  -- { "junegunn/fzf" },
-  -- { "junegunn/fzf.vim", },
   {
     'nvim-telescope/telescope.nvim', tag = '0.1.6',
     dependencies = { 'nvim-lua/plenary.nvim' }, 
@@ -267,24 +265,25 @@ require("lazy").setup({
   { "junegunn/vim-easy-align" },
   -- { "karb94/neoscroll.nvim" },
   { "lukas-reineke/indent-blankline.nvim", config = function() require("ibl").setup {} end, },
-  -- { 
-  --   "morhetz/gruvbox", 
-  --   config = function()
-  --     vim.cmd.colorscheme("gruvbox") 
-  --     vim.g.airline_theme = "gruvbox"
-  --     vim.opt.background = "dark"
-  --   end 
-  -- },
-  {
-    "embark-theme/vim",
+  { 
+    "morhetz/gruvbox", 
     config = function()
-      vim.cmd.colorscheme("embark")
-    end,
+      vim.cmd.colorscheme("gruvbox") 
+      vim.g.airline_theme = "gruvbox"
+      vim.opt.background = "light"
+    end 
   },
+  -- {
+  --   "embark-theme/vim",
+  --   config = function()
+  --     vim.cmd.colorscheme("embark")
+  --     vim.g.airline_theme = "embark"
+  --   end,
+  -- },
   { 
     'nvim-lualine/lualine.nvim', 
     dependencies = { 'nvim-tree/nvim-web-devicons' }, 
-    opts = { options = { theme = "embark" } } 
+    opts = { options = { theme = "gruvbox" } } 
   }, 
   { 
     "willothy/nvim-cokeline", 
