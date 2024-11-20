@@ -1,10 +1,9 @@
-AUX_FZF_FIND_CMD=fdfind
-AUX_FZF_DOC_ROOT_DIR="/usr/share/doc/fzf/examples"
-AUX_FZF_EXCLUDE_FOLDER="venv,.config,.git,.local"
-CUDA_INSTALL_PATH=/opt/cuda
+declare -p AUX_FZF_FIND_CMD &>/dev/null || AUX_FZF_FIND_CMD=fd
+declare -p AUX_FZF_DOC_ROOT_DIR &>/dev/null || AUX_FZF_DOC_ROOT_DIR="/usr/share/doc/fzf/examples"
+declare -p AUX_FZF_EXCLUDE_FOLDER &>/dev/null || AUX_FZF_EXCLUDE_FOLDER="venv,.config,.git,.local"
+declare -p CUDA_INSTALL_PATH &>/dev/null || CUDA_INSTALL_PATH=/opt/cuda
 alias wopen="/mnt/c/Windows/explorer.exe"
 alias code="$WINHOME/opt/Microsoft\ VS\ Code/bin/code"
-
 alias vi="nvim"
 alias ssh="TERM=xterm-256color ssh"
 
@@ -112,7 +111,9 @@ export FZF_DEFAULT_OPTS="$AUX_FZF_PREFIX_DEFAULT_OPT"
 unset AUX_FZF_PREFIX_DEFAULT_OPT
 
 export FZF_DEFAULT_COMMAND="${AUX_FZF_FIND_CMD} --type f --strip-cwd-prefix --follow --exclude=$AUX_FZF_EXCLUDE_FOLDER"
-source $AUX_FZF_DOC_ROOT_DIR/completion.zsh
-source $AUX_FZF_DOC_ROOT_DIR/key-bindings.zsh
+if [[ -e $AUX_FZF_DOC_ROOT_DIR ]]; then 
+    source $AUX_FZF_DOC_ROOT_DIR/completion.zsh
+    source $AUX_FZF_DOC_ROOT_DIR/key-bindings.zsh
+fi 
 unset AUX_FZF_DOC_ROOT_DIR AUX_FZF_EXCLUDE_FOLDER AUX_FZF_DOC_ROOT_DIR
 
