@@ -7,6 +7,7 @@ alias wopen="/mnt/c/Windows/explorer.exe"
 alias code="$WINHOME/opt/Microsoft\ VS\ Code/bin/code"
 alias vi="nvim"
 alias ssh="TERM=xterm-256color ssh"
+alias ll="ls -la"
 
 HISTSIZE=1000
 SAVEHIST=1000
