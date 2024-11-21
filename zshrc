@@ -2,6 +2,7 @@ declare -p AUX_FZF_FIND_CMD &>/dev/null || AUX_FZF_FIND_CMD=fd
 declare -p AUX_FZF_DOC_ROOT_DIR &>/dev/null || AUX_FZF_DOC_ROOT_DIR="/usr/share/doc/fzf/examples"
 declare -p AUX_FZF_EXCLUDE_FOLDER &>/dev/null || AUX_FZF_EXCLUDE_FOLDER="venv,.config,.git,.local"
 declare -p CUDA_INSTALL_PATH &>/dev/null || CUDA_INSTALL_PATH=/opt/cuda
+
 alias wopen="/mnt/c/Windows/explorer.exe"
 alias code="$WINHOME/opt/Microsoft\ VS\ Code/bin/code"
 alias vi="nvim"
@@ -19,10 +20,8 @@ export GO111MODULE=on
 export GOPROXY=https://goproxy.cn
 export GOPATH=$HOME/.local/gohome
 
-
 setopt histignorealldups sharehistory
 bindkey -e
-
 ######################## COMPLETION #####################
 # Use modern completion system
 autoload -Uz compinit
@@ -41,7 +40,6 @@ zstyle ':completion:*' verbose true
 zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
 zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 
-
 ####################### CUDA #########################
 if [[ -e $CUDA_INSTALL_PATH ]]; then 
     export PATH=$PATH:$CUDA_INSTALL_PATH/bin
@@ -49,18 +47,13 @@ if [[ -e $CUDA_INSTALL_PATH ]]; then
 fi
 unset CUDA_INSTALL_PATH
 
-
 ########################### ZINIT ###################################
 ### Added by Zinit's installer
-if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
-    print -P "%F{33} %F{220}Installing %F{33}ZDHARMA-CONTINUUM%F{220} Initiative Plugin Manager (%F{33}zdharma-continuum/zinit%F{220})…%f"
-    command mkdir -p "$HOME/.local/share/zinit" && command chmod g-rwX "$HOME/.local/share/zinit"
-    command git clone https://github.com/zdharma-continuum/zinit "$HOME/.local/share/zinit/zinit.git" && \
-        print -P "%F{33} %F{34}Installation successful.%f%b" || \
-        print -P "%F{160} The clone has failed.%f%b"
-fi
+ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
+[ ! -d $ZINIT_HOME ] && mkdir -p "$(dirname $ZINIT_HOME)"
+[ ! -d $ZINIT_HOME/.git ] && git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
+source "${ZINIT_HOME}/zinit.zsh"
 
-source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
 autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
 
@@ -71,7 +64,6 @@ zinit light-mode for \
     zdharma-continuum/zinit-annex-bin-gem-node \
     zdharma-continuum/zinit-annex-patch-dl \
     zdharma-continuum/zinit-annex-rust
-
 zinit snippet OMZ::lib/clipboard.zsh
 zinit snippet OMZ::lib/history.zsh
 zinit snippet OMZ::lib/key-bindings.zsh
@@ -80,7 +72,7 @@ zinit snippet OMZ::plugins/sudo/sudo.plugin.zsh
 zinit snippet OMZP::gitignore
 zinit snippet OMZ::lib/git.zsh
 zinit snippet OMZ::plugins/git/git.plugin.zsh
-
+zinit light conda-incubator/conda-zsh-completion
 zinit ice depth"1" # git clone depth
 zinit light romkatv/powerlevel10k
 ### End of Zinit's installer chunk
@@ -92,8 +84,6 @@ fi
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-
-
 ############################# PYENV #########################
 python_venv() {
     MYVENV=./venv/
@@ -104,16 +94,13 @@ autoload -U add-zsh-hook
 add-zsh-hook chpwd python_venv
 python_venv
 
-
 ###################### FZF ##############################
 AUX_FZF_PREFIX_DEFAULT_OPT='--height 40% --layout=reverse --border'
 export FZF_DEFAULT_OPTS="$AUX_FZF_PREFIX_DEFAULT_OPT"
-unset AUX_FZF_PREFIX_DEFAULT_OPT
-
 export FZF_DEFAULT_COMMAND="${AUX_FZF_FIND_CMD} --type f --strip-cwd-prefix --follow --exclude=$AUX_FZF_EXCLUDE_FOLDER"
 if [[ -e $AUX_FZF_DOC_ROOT_DIR ]]; then 
     source $AUX_FZF_DOC_ROOT_DIR/completion.zsh
     source $AUX_FZF_DOC_ROOT_DIR/key-bindings.zsh
 fi 
-unset AUX_FZF_DOC_ROOT_DIR AUX_FZF_EXCLUDE_FOLDER AUX_FZF_DOC_ROOT_DIR
+unset AUX_FZF_DOC_ROOT_DIR AUX_FZF_EXCLUDE_FOLDER AUX_FZF_DOC_ROOT_DIR AUX_FZF_PREFIX_DEFAULT_OPT
 
