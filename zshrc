@@ -74,6 +74,7 @@ zinit snippet OMZP::gitignore
 zinit snippet OMZ::lib/git.zsh
 zinit snippet OMZ::plugins/git/git.plugin.zsh
 zinit light conda-incubator/conda-zsh-completion
+autoload -U compinit && compinit
 zinit ice depth"1" # git clone depth
 zinit light romkatv/powerlevel10k
 ### End of Zinit's installer chunk
