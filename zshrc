@@ -11,7 +11,6 @@ alias ll="ls -la"
 
 HISTSIZE=1000
 SAVEHIST=1000
-HISTFILE=~/.zsh_history
 
 # rust 
 [[ ! -f $HOME/.cargo/env ]] || . "$HOME/.cargo/env"
@@ -20,6 +19,20 @@ HISTFILE=~/.zsh_history
 export GO111MODULE=on
 export GOPROXY=https://goproxy.cn
 export GOPATH=$HOME/.local/gohome
+
+_zsh_add_global_path() {
+    local global_path="$PATH"
+    for arg in "$@"; do
+        case ":${global_path}:" in
+        *:"$arg":*)
+            ;;
+        *)
+            global_path="$arg:$global_path"
+            ;;
+        esac
+    done
+    export PATH="$global_path"
+}
 
 setopt histignorealldups sharehistory
 bindkey -e
@@ -87,14 +100,15 @@ fi
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 ############################# PYENV #########################
-python_venv() {
-    MYVENV=./venv/
-    [[ -d $MYVENV ]] && source $MYVENV/bin/activate > /dev/null 2>&1
-    [[ ! -d $MYVENV ]] && deactivate > /dev/null 2>&1
-}
-autoload -U add-zsh-hook
-add-zsh-hook chpwd python_venv
-python_venv
+# _zsh_python_venv() {
+#     for pyvenv in ./.venv/ ./venv/; do 
+#         [[ -d $pyvenv ]] && source $pyvenv/bin/activate > /dev/null 2>&1
+#         [[ ! -d $pyvenv ]] && deactivate > /dev/null 2>&1
+#     done
+# }
+# autoload -U add-zsh-hook
+# add-zsh-hook chpwd _zsh_python_venv
+# _zsh_python_venv
 
 ###################### FZF ##############################
 AUX_FZF_PREFIX_DEFAULT_OPT='--height 40% --layout=reverse --border'
