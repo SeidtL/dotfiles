@@ -270,7 +270,7 @@ require("lazy").setup({
     config = function()
       vim.cmd.colorscheme("gruvbox") 
       vim.g.airline_theme = "gruvbox"
-      vim.opt.background = "light"
+      vim.opt.background = "dark"
     end 
   },
   -- {
