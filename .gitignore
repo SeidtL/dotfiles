@@ -4,3 +4,4 @@
 !/tmux.conf
 !/vimrc
 !/.gitignore
+!/init.sh
