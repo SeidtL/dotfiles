@@ -8,7 +8,6 @@ filetype plugin on
 filetype plugin indent on
 
 set nowrap
-set termguicolors
 set fileformat=unix
 set fileformats=unix
 set number
@@ -39,11 +38,10 @@ set foldlevel=99
 set laststatus=2
 set autochdir
 set cursorline
-set completeopt=menu,menuone,noselect
 set whichwrap+=<,>,h,l
 
 let mapleader = " "
-nnoremap <silent> jk <esc>
+inoremap <silent> jk <esc>
 vnoremap <silent> jk <esc>
 nnoremap <silent> H <s-up>
 nnoremap <silent> L <s-down>
@@ -64,3 +62,4 @@ nnoremap <silent> s<left> <C-w>5<
 nnoremap <silent> s<right> <C-w>5>
 nnoremap <silent> s<up> <C-w>5+
 nnoremap <silent> s<down> <C-w>-
+
