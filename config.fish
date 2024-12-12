@@ -21,11 +21,15 @@ fish_config prompt choose arrow
 fish_config theme choose Lava
 
 # conda
-eval conda "shell.fish" "hook" $argv | source
+if command -v conda > /dev/null 
+    eval conda "shell.fish" "hook" $argv | source
+end 
 
 # fzf
-setenv FZF_DEFAULT_COMMAND 'fd --type f --strip-cwd-prefix --exclude=venv,.config,.git,.local --follow'
-setenv FZF_CTRL_T_COMMAND 'fd --type f --strip-cwd-prefix --exclude=venv,.config,.git,.local --follow'
-setenv FZF_DEFAULT_OPTS '--height 40% --layout=reverse --border'
-fzf --fish | source
+if command -v fzf > /dev/null 
+    setenv FZF_DEFAULT_COMMAND 'fd --type f --strip-cwd-prefix --exclude=venv,.config,.git,.local --follow'
+    setenv FZF_CTRL_T_COMMAND 'fd --type f --strip-cwd-prefix --exclude=venv,.config,.git,.local --follow'
+    setenv FZF_DEFAULT_OPTS '--height 30% --layout=reverse --border'
+    fzf --fish | source
+end
 
