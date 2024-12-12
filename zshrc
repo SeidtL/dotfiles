@@ -78,18 +78,23 @@ zinit light-mode for \
     zdharma-continuum/zinit-annex-bin-gem-node \
     zdharma-continuum/zinit-annex-patch-dl \
     zdharma-continuum/zinit-annex-rust
-zinit snippet OMZ::lib/clipboard.zsh
-zinit snippet OMZ::lib/history.zsh
-zinit snippet OMZ::lib/key-bindings.zsh
-zinit snippet OMZ::lib/theme-and-appearance.zsh
-zinit snippet OMZ::plugins/sudo/sudo.plugin.zsh
-zinit snippet OMZP::gitignore
-zinit snippet OMZ::lib/git.zsh
-zinit snippet OMZ::plugins/git/git.plugin.zsh
-zinit light conda-incubator/conda-zsh-completion
-autoload -U compinit && compinit
+
 zinit ice depth"1" # git clone depth
 zinit light romkatv/powerlevel10k
+
+zinit snippet OMZL::clipboard.zsh
+zinit snippet OMZL::history.zsh
+zinit snippet OMZL::key-bindings.zsh
+zinit snippet OMZL::theme-and-appearance.zsh
+zinit snippet OMZP::sudo
+
+zinit snippet OMZL::git.zsh
+zinit snippet OMZP::gitignore
+zinit ice atload"unalias grv"
+zinit snippet OMZP::git 
+
+zinit light conda-incubator/conda-zsh-completion
+autoload -U compinit && compinit
 ### End of Zinit's installer chunk
 
 ############################# P10K #############################
