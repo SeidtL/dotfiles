@@ -268,6 +268,16 @@ require("lazy").setup({
     end
   },
   { "folke/todo-comments.nvim", dependencies = { "nvim-lua/plenary.nvim" }, config = true },
+  { 
+    "akinsho/toggleterm.nvim", 
+    version = "*", 
+    config = function()
+      require("toggleterm").setup{
+        open_mapping = [[<c-\>]], 
+        direction = 'float'
+      }
+    end
+  }, 
   { "RRethy/vim-illuminate" },
   { "junegunn/vim-easy-align" },
   -- { "karb94/neoscroll.nvim" },
