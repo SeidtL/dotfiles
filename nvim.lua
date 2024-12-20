@@ -212,7 +212,14 @@ require("lazy").setup({
       local lspconfig = require("lspconfig")
       local lsp_servers = {
         clangd = { capabilities = capabilities }, 
-        pyright = { capabilities = capabilities }, 
+        pyright = {
+          capabilities = capabilities,
+          settings = {
+            python = {
+              analysis = { typeCheckingMode = "off" }
+            },
+          },
+        },
         texlab = { 
           capabilities = capabilities, 
           settings = {

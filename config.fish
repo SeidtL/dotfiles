@@ -1,7 +1,7 @@
 alias vi=nvim
 alias ssh="TERM=xterm-256color /bin/ssh"
 
-fish_add_path -U $HOME/.cargo/bin $HOME/.local/bin
+fish_add_path -U $HOME/.cargo/bin $HOME/.local/miniforge/bin
 
 # fish
 set __fish_git_prompt_showuntrackedfiles 'yes'
