@@ -68,7 +68,7 @@ vim.o.whichwrap = vim.o.whichwrap .. "<,>,h,l"
 
 local opt = { noremap = true, silent = true }
 vim.g.mapleader = " "
-vim.keymap.set({"i", "v"}, "jk", "<esc>", opt)
+vim.keymap.set({"i"}, "jk", "<esc>", opt)
 vim.keymap.set({"n"}, "H", "<s-up>", opt)
 vim.keymap.set({"n"}, "L", "<s-down>", opt)
 vim.keymap.set({"n"}, "<leader>v", "<c-v>", opt)

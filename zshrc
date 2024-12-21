@@ -85,6 +85,8 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
+eval "$($HOME/.local/miniforge/bin/conda shell.zsh hook)"
+
 # fd 
 FIND_CMD=find 
 if command -v fd &>/dev/null; then
