@@ -3,30 +3,16 @@ alias vi="nvim"
 alias ssh="TERM=xterm-256color /bin/ssh"
 alias ll="ls -la"
 
-# rust 
-[[ ! -f $HOME/.cargo/env ]] || . "$HOME/.cargo/env"
-
-# go 
-export GO111MODULE=on
-export GOPROXY=https://goproxy.cn
-export GOPATH=$HOME/.local/gohome
-
-HISTSIZE=2000
-SAVEHIST=2000
 
 _zsh_add_global_path() {
-    local global_path="$PATH"
-    for arg in "$@"; do
-        case ":${global_path}:" in
-        *:"$arg":*)
-            ;;
-        *)
-            global_path="$arg:$global_path"
-            ;;
-        esac
-    done
-    export PATH="$global_path"
+    case ":$PATH:" in
+    *:"$1":*)
+        ;;
+    *)
+        export PATH="$1:$PATH"
+    esac
 }
+_zsh_add_global_path /usr/bin
 
 setopt histignorealldups sharehistory
 bindkey -e
@@ -35,7 +21,6 @@ bindkey -e
 autoload -Uz compinit && compinit 
 zstyle ':completion:*' group-name ''
 zstyle ':completion:*' menu select=2
-eval "$(dircolors -b)"
 zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 zstyle ':completion:*' list-colors ''
 zstyle ':completion:*' list-prompt %SAt %p: Hit TAB for more, or the character to insert%s
@@ -55,27 +40,17 @@ source "${ZINIT_HOME}/zinit.zsh"
 autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
 
-# zinit light-mode for \
-#     zdharma-continuum/zinit-annex-as-monitor \
-#     zdharma-continuum/zinit-annex-bin-gem-node \
-#     zdharma-continuum/zinit-annex-patch-dl \
-#     zdharma-continuum/zinit-annex-rust
-
 zinit ice depth"1" # git clone depth
 zinit light romkatv/powerlevel10k
+zinit light conda-incubator/conda-zsh-completion
 
 zinit snippet OMZL::clipboard.zsh
 zinit snippet OMZL::history.zsh
 zinit snippet OMZL::key-bindings.zsh
 zinit snippet OMZL::theme-and-appearance.zsh
-zinit snippet OMZP::sudo
-
 zinit snippet OMZL::git.zsh
 zinit snippet OMZP::gitignore
-zinit ice atload"unalias grv"
-zinit snippet OMZP::git
 
-zinit light conda-incubator/conda-zsh-completion
 autoload -U compinit && compinit
 ### End of Zinit's installer chunk
 
@@ -85,7 +60,13 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
+# conda
 eval "$($HOME/.local/miniforge/bin/conda shell.zsh hook)"
+
+# go 
+export GO111MODULE=on
+export GOPROXY=https://goproxy.cn
+export GOPATH=$HOME/.local/gohome
 
 # fd 
 FIND_CMD=find 
@@ -101,6 +82,8 @@ if command -v fzf &>/dev/null; then
     export FZF_DEFAULT_COMMAND="${FIND_CMD} --type f --strip-cwd-prefix --follow --exclude=.venv,.config,.git,.local"
     eval "$(fzf --zsh)"
 fi
-unset FIND_CMD
 
+HISTSIZE=2000
+SAVEHIST=2000
 
+unset _zsh_add_global_path FIND_CMD
