@@ -6,7 +6,11 @@ end
 
 c.initial_cols = 110
 c.initial_rows = 25
-c.font = wezterm.font 'FiraCode Nerd Font Mono'
+c.font = wezterm.font_with_fallback {
+  'FiraCode Nerd Font Mono',
+  'Noto Sans CJK SC',
+}
+-- c.font = wezterm.font 'FiraCode Nerd Font Mono'
 local materia = wezterm.color.get_builtin_schemes()['Material Darker (base16)']
 materia.scrollbar_thumb = '#cccccc'
 c.colors = materia
