@@ -1,35 +1,25 @@
 local wezterm = require 'wezterm'
 local c = {}
 if wezterm.config_builder then
-  c = wezterm.config_builder()
+    c = wezterm.config_builder()
 end
 
--- 初始大小
-c.initial_cols = 96
-c.initial_rows = 24
-
--- 关闭时不进行确认
--- c.window_close_confirmation = 'NeverPrompt'
-
--- 字体
+c.initial_cols = 110
+c.initial_rows = 25
 c.font = wezterm.font 'FiraCode Nerd Font Mono'
-
--- 配色
 local materia = wezterm.color.get_builtin_schemes()['Material Darker (base16)']
-materia.scrollbar_thumb = '#cccccc' -- 更明显的滚动条
+materia.scrollbar_thumb = '#cccccc'
 c.colors = materia
-
--- 透明背景
 c.window_background_opacity = 0.9
--- 取消 Windows 原生标题栏
 c.window_decorations = "INTEGRATED_BUTTONS|RESIZE"
--- 滚动条尺寸为 15 ，其他方向不需要 pad
 c.window_padding = { left = 0, right = 15, top = 0, bottom = 0 }
--- 启用滚动条
 c.enable_scroll_bar = true
-
--- 默认启动 MinGW64 / MSYS2
-c.default_prog = { 'C:\\Program Files\\PowerShell\\7\\pwsh.exe' }
+if wezterm.target_triple:find("windows") then 
+    c.default_prog = { 'C:\\Program Files\\PowerShell\\7\\pwsh.exe' }
+else
+    c.default_prog = { '/bin/zsh', "-l" }
+end 
+c.tab_max_width = 20
 
 c.disable_default_key_bindings = true
 local act = wezterm.action
