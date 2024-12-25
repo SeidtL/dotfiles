@@ -10,13 +10,16 @@ c.font = wezterm.font_with_fallback {
   'FiraCode Nerd Font Mono',
   'Noto Sans CJK SC',
 }
--- c.font = wezterm.font 'FiraCode Nerd Font Mono'
+c.check_for_updates = false
+c.audible_bell = "Disabled"
+
+c.window_padding = { left = 5, right = 15, top = 5, bottom = 5 }
+c.window_background_image_hsb = { brightness = 0.8, hue = 1.0, saturation = 1.0 }
 local materia = wezterm.color.get_builtin_schemes()['Material Darker (base16)']
 materia.scrollbar_thumb = '#cccccc'
 c.colors = materia
 c.window_background_opacity = 0.9
 c.window_decorations = "INTEGRATED_BUTTONS|RESIZE"
-c.window_padding = { left = 0, right = 15, top = 0, bottom = 0 }
 c.enable_scroll_bar = true
 if wezterm.target_triple:find("windows") then 
     c.default_prog = { 'C:\\Program Files\\PowerShell\\7\\pwsh.exe' }

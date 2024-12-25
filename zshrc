@@ -60,8 +60,14 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
+# bun 
+_zsh_add_global_path $HOME/.bun/bin
+
 # conda
 eval "$($HOME/.local/miniforge/bin/conda shell.zsh hook)"
+
+# rust 
+[[ -f $HOME/.cargo/env ]] && . "$HOME/.cargo/env"
 
 # go 
 export GO111MODULE=on
