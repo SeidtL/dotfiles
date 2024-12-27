@@ -13,6 +13,8 @@ _zsh_add_global_path() {
     esac
 }
 _zsh_add_global_path /usr/bin
+_zsh_add_global_path $HOME/.local/bin
+_zsh_add_global_path /opt/zig
 
 setopt histignorealldups sharehistory
 bindkey -e
@@ -64,12 +66,15 @@ fi
 _zsh_add_global_path $HOME/.bun/bin
 
 # conda
-eval "$($HOME/.local/miniforge/bin/conda shell.zsh hook)"
+function condainit() {
+    eval "$($HOME/.local/miniforge/bin/conda shell.zsh hook)"
+}
 
 # rust 
 [[ -f $HOME/.cargo/env ]] && . "$HOME/.cargo/env"
 
 # go 
+_zsh_add_global_path /opt/go/bin
 export GO111MODULE=on
 export GOPROXY=https://goproxy.cn
 export GOPATH=$HOME/.local/gohome

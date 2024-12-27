@@ -1,0 +1,24 @@
+font-family = FiraCode Nerd Font Mono,Noto Sans CJK SC
+
+font-feature = -liga
+cursor-style = block
+cursor-style-blink = false
+
+keybind = ctrl+w>5=new_split:down
+keybind = ctrl+w>'=new_split:right
+keybind = ctrl+w>"=goto_split:right
+keybind = ctrl+w>left=goto_split:left
+keybind = ctrl+w>up=goto_split:top
+keybind = ctrl+w>down=goto_split:bottom
+keybind = ctrl+w>tab=goto_split:previous
+
+keybind = ctrl+w>ctrl+down=resize_split:down,10
+keybind = ctrl+w>ctrl+left=resize_split:left,10
+keybind = ctrl+w>ctrl+right=resize_split:right,10
+keybind = ctrl+w>ctrl+up=resize_split:up,10
+
+keybind = ctrl+shift+t=new_tab
+keybind = ctrl+shift+tab=previous_tab
+keybind = ctrl+tab=next_tab
+
+shell-integration-features = no-cursor,no-sudo,title

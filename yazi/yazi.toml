@@ -17,6 +17,7 @@ edit = [
 ]
 play = [
     { run = 'mpv --force-window "$@"' },
+    { run = 'vlc "$@"' }
 ]
 
 [open]
