@@ -1,6 +1,8 @@
-font-family = FiraCode Nerd Font Mono,Noto Sans CJK SC
+font-family = Noto Sans Mono
+font-family = FiraCode Nerd Font Mono
+font-family = Noto Sans CJK SC
+font-feature = liga,calt
 
-font-feature = -liga
 cursor-style = block
 cursor-style-blink = false
 

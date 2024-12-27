@@ -79,6 +79,9 @@ export GO111MODULE=on
 export GOPROXY=https://goproxy.cn
 export GOPATH=$HOME/.local/gohome
 
+# bun completions
+[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
+
 # fd 
 FIND_CMD=find 
 if command -v fd &>/dev/null; then
@@ -98,3 +101,4 @@ HISTSIZE=2000
 SAVEHIST=2000
 
 unset _zsh_add_global_path FIND_CMD
+
