@@ -62,8 +62,6 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-# bun 
-_zsh_add_global_path $HOME/.bun/bin
 
 # conda
 function condainit() {
@@ -79,8 +77,8 @@ export GO111MODULE=on
 export GOPROXY=https://goproxy.cn
 export GOPATH=$HOME/.local/gohome
 
-# bun completions
-[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
+# nodejs 
+_zsh_add_global_path /opt/node/bin/
 
 # fd 
 FIND_CMD=find 
@@ -95,6 +93,10 @@ if command -v fzf &>/dev/null; then
     export FZF_DEFAULT_OPTS="--height 40% --layout=reverse --border"
     export FZF_DEFAULT_COMMAND="${FIND_CMD} --type f --strip-cwd-prefix --follow --exclude=.venv,.config,.git,.local"
     eval "$(fzf --zsh)"
+fi
+
+if command -v zoxide &>/dev/null; then 
+    eval "$(zoxide init zsh)"
 fi
 
 HISTSIZE=2000

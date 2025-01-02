@@ -6,6 +6,12 @@ font-feature = liga,calt
 cursor-style = block
 cursor-style-blink = false
 
+window-height = 25 
+window-width = 110 
+
+shell-integration-features = no-cursor,no-sudo,title
+gtk-single-instance = true
+
 keybind = ctrl+w>5=new_split:down
 keybind = ctrl+w>'=new_split:right
 keybind = ctrl+w>right=goto_split:right
@@ -23,4 +29,3 @@ keybind = ctrl+shift+t=new_tab
 keybind = ctrl+shift+tab=previous_tab
 keybind = ctrl+tab=next_tab
 
-shell-integration-features = no-cursor,no-sudo,title
