@@ -1,29 +1,18 @@
+vim.cmd('source ' .. vim.fn.stdpath('config') .. '/vimrc')
+
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
-  vim.fn.system({
-    "git",
-    "clone",
-    "--filter=blob:none",
-    "https://github.com/folke/lazy.nvim.git",
-    "--branch=stable", -- latest stable release
-    lazypath,
-  })
+    vim.fn.system({
+        "git",
+        "clone",
+        "--filter=blob:none",
+        "https://github.com/folke/lazy.nvim.git",
+        "--branch=stable", -- latest stable release
+        lazypath,
+    })
 end
 vim.opt.rtp:prepend(lazypath)
 
-vim.cmd[[
-  autocmd filetype python,c,shell,bash,vim,cpp set sw=4
-  autocmd filetype python,c,shell,bash,vim,cpp set ts=4
-  autocmd filetype python,c,shell,bash,vim,cpp set sts=4
-  autocmd filetype tex,lua set sw=2
-  autocmd filetype tex,lua set ts=2
-  autocmd filetype tex,lua set sts=2
-  syntax on
-  filetype on
-  filetype indent on
-  filetype plugin on
-  filetype plugin indent on
-]]
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwplugin = 1
 vim.opt.wrap = false
@@ -48,7 +37,7 @@ vim.opt.shiftwidth = 4
 vim.opt.expandtab = true
 vim.opt.smarttab = true
 vim.opt.expandtab = true
-vim.opt.list = true
+vim.opt.list = false
 vim.opt.listchars = { tab = "► ", trail = "·" }
 vim.opt.scrolloff = 4
 vim.opt.tw = 0
@@ -67,244 +56,199 @@ vim.opt.completeopt = "menu,menuone,noselect"
 vim.o.whichwrap = vim.o.whichwrap .. "<,>,h,l"
 
 local opt = { noremap = true, silent = true }
-vim.g.mapleader = " "
-vim.keymap.set({"i"}, "jk", "<esc>", opt)
-vim.keymap.set({"n"}, "H", "<s-up>", opt)
-vim.keymap.set({"n"}, "L", "<s-down>", opt)
-vim.keymap.set({"n"}, "<leader>v", "<c-v>", opt)
-vim.keymap.set({"n"}, "<leader>t", ":NvimTreeToggle<return>", opt)
-vim.keymap.set({"n"}, "n", "nzz", opt)
-vim.keymap.set({"n"}, "N", "Nzz", opt)
-vim.keymap.set({"n"}, "S", ":w<Return>", opt)
-vim.keymap.set({"n"}, "Q", ":q<Return>", opt)
-vim.keymap.set({"n"}, "ss", ":split<Return><C-w>w", opts)
-vim.keymap.set({"n"}, "sv", ":vsplit<Return><C-w>w", opts)
-vim.keymap.set({"n"}, "<Space>", "<C-w>w", opts)
-vim.keymap.set({"n"}, "sq", "<C-w>q", opts)
-vim.keymap.set({"n"}, "sh", "<C-w>h", opts)
-vim.keymap.set({"n"}, "sk", "<C-w>k", opts)
-vim.keymap.set({"n"}, "sj", "<C-w>j", opts)
-vim.keymap.set({"n"}, "sl", "<C-w>l", opts)
-vim.keymap.set({"n"}, "s<left>", "<C-w>5<", opts)
-vim.keymap.set({"n"}, "s<right>", "<C-w>5>", opts)
-vim.keymap.set({"n"}, "s<up>", "<C-w>5+", opts)
-vim.keymap.set({"n"}, "s<down>", "<C-w>-", opts)
--- vim.keymap.set({"n"}, "<Leader>f", ":Files<Enter>", opts)
-vim.keymap.set({"x"}, "ga", "<Plug>(EasyAlign)", opts)
-vim.keymap.set({"n"}, "ga", "<Plug>(EasyAlign)", opts)
-vim.keymap.set({"n"}, "ff", "<cmd>lua vim.lsp.buf.format { async = true }<CR>", opts)
-vim.keymap.set({"n"}, "<Leader>k", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
-vim.keymap.set({"n"}, "<Leader>j", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
-vim.keymap.set({"n"}, "<S-Tab>", "<Plug>(cokeline-focus-prev)", { silent = true })
-vim.keymap.set({"n"}, "<Tab>", "<Plug>(cokeline-focus-next)", { silent = true })
-vim.keymap.set({"n"}, "<Leader>p", "<Plug>(cokeline-switch-prev)", { silent = true })
-vim.keymap.set({"n"}, "<Leader>n", "<Plug>(cokeline-switch-next)", { silent = true })
-vim.keymap.set({"n"}, "<Leader>n", "<Plug>(cokeline-switch-next)", { silent = true })
-vim.keymap.set({"n"}, "<Leader>d", ":bd<Return>", { silent = true })
+local KM = vim.keymap
+KM.set({"x"}, "ga", "<Plug>(EasyAlign)", opt)
+KM.set({"n"}, "ga", "<Plug>(EasyAlign)", opt)
+KM.set({"n"}, "ff", "<cmd>lua vim.lsp.buf.format { async = true }<CR>", opt)
+KM.set({"n"}, "<Leader>k", "<cmd>lua vim.lsp.buf.hover()<CR>", opt)
+KM.set({"n"}, "<Leader>j", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opt)
+KM.set({"n"}, "<S-Tab>", "<Plug>(cokeline-focus-prev)", { silent = true })
+KM.set({"n"}, "<Tab>", "<Plug>(cokeline-focus-next)", { silent = true })
+KM.set({"n"}, "<Leader>p", "<Plug>(cokeline-switch-prev)", { silent = true })
+KM.set({"n"}, "<Leader>n", "<Plug>(cokeline-switch-next)", { silent = true })
+KM.set({"n"}, "<Leader>n", "<Plug>(cokeline-switch-next)", { silent = true })
+KM.set({"n"}, "<Leader>d", ":bd<Return>", { silent = true })
 
 require("lazy").setup({
-  {
-    "hrsh7th/nvim-cmp",
-    dependencies = {
-      "neovim/nvim-lspconfig",
-      "hrsh7th/cmp-nvim-lsp",
-      "hrsh7th/cmp-buffer",
-      "hrsh7th/cmp-path",
-      "hrsh7th/cmp-cmdline",
-      "ray-x/lsp_signature.nvim",
-      "onsails/lspkind.nvim",
-      "hrsh7th/vim-vsnip",
-      "hrsh7th/vim-vsnip-integ",
-      "williamboman/mason.nvim",
-      "williamboman/mason-lspconfig.nvim"
-    },
-    build = ":MasonUpdate",
-
-    config = function()
-      local cmp = require("cmp")
-      local lspkind = require("lspkind")
-      cmp.setup({
-        snippet = {
-          expand = function(args)
-            vim.fn["vsnip#anonymous"](args.body)
-          end,
-        },
-        mapping = cmp.mapping.preset.insert({
-          ["<C-b>"] = cmp.mapping.scroll_docs(-4),
-          ["<C-f>"] = cmp.mapping.scroll_docs(4),
-          ["<CR>"] = cmp.mapping.confirm({ select = true }),
-          ["<Tab>"] = cmp.mapping.confirm({ select = true }),
-          ["<C-e>"] = cmp.mapping.abort(),
-          ["<Esc>"] = cmp.mapping.close(),
-        }),
-        sources = cmp.config.sources({
-          { name = "nvim_lsp" },
-          { name = "vsnip" },
-          { name = "path" }
-        }, {
-          { name = "buffer" },
-        }),
-        sorting = {
-          comparators = {
-            cmp.config.compare.exact,
-            cmp.config.compare.recently_used,
-            cmp.config.compare.score,
-            cmp.config.compare.kind,
-            cmp.config.compare.order,
-          }
-        },
-        formatting = {
-          format = lspkind.cmp_format({
-            mode = "symbol_text",
-            menu = ({
-              nvim_lsp = "[LSP]",
-              path = "[Path]",
-              buffer = "[Buffer]",
-              emoji = "[Emoji]",
-              omni = "[Omni]",
-            }),
-          }),
-        },
-      })
-      -- Use buffer source for `/`
-      cmp.setup.cmdline({ "/", "?" }, {
-        mapping = cmp.mapping.preset.cmdline(),
-        sources = {
-          { name = "buffer" }
-        }
-      })
-
-      -- Use cmdline & path source for ":"
-      cmp.setup.cmdline(":", {
-        mapping = cmp.mapping.preset.cmdline(),
-        sources = cmp.config.sources({
-          { name = "path" }
-        }, {
-          { name = "cmdline" }
-        })
-      })
-
-
-      vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
-      vim.lsp.handlers.hover, {
-          border = "none",
-          width = 100 
-        }
-      )
-      vim.api.nvim_create_autocmd("LspAttach", {
-        callback = function(args)
-          local bufnr = args.buf
-          local client = vim.lsp.get_client_by_id(args.data.client_id)
-          if vim.tbl_contains({ "null-ls" }, client.name) then  -- blacklist lsp
-            return
-          end
-          require("lsp_signature").on_attach({
-            hint_prefix = " ",
-            max_height = 8,
-            max_width = 80,
-            handler_opts = { border = "none" },
-          }, bufnr)
-        end,
-      })
-      -- LSP server setup 
-      require("mason").setup()
-      local capabilities = require("cmp_nvim_lsp").default_capabilities()
-      local lspconfig = require("lspconfig")
-      local lsp_servers = {
-        clangd = { capabilities = capabilities }, 
-        pyright = {
-          capabilities = capabilities,
-          settings = {
-            python = {
-              analysis = { typeCheckingMode = "off" }
+    {
+        "williamboman/mason.nvim",
+        dependencies = "williamboman/mason-lspconfig.nvim", 
+        build = ":MasonUpdate",
+        config = function() 
+            require("mason").setup()
+            require("mason-lspconfig").setup({
+                ensure_installed = { "clangd", "pyright" }
+            })
+        end 
+    }, 
+    {
+        'saghen/blink.cmp',
+        dependencies = { 
+            {
+                'L3MON4D3/LuaSnip', 
+                version = 'v2.*'
             },
-          },
+            'xzbdmw/colorful-menu.nvim',
         },
-        texlab = { 
-          capabilities = capabilities, 
-          settings = {
-            texlab = {
-              build = {
-                args = {"-pdf", "-interaction=nonstopmode", "-synctex=1", "%f"},
-                onSave = true
-              },
-              forwardSearch = {
-                executable = "SumatraPDF",
-                args = {"-reuse-instance", "%p", "-forward-search", "%f", "%l"}, 
-              }, 
-            }
+        version = '*',
+        opts = {
+            snippets = {
+                expand = function(snippet) require('luasnip').lsp_expand(snippet) end,
+                active = function(filter)
+                    if filter and filter.direction then
+                        return require('luasnip').jumpable(filter.direction)
+                    end
+                        return require('luasnip').in_snippet()
+                end,
+                jump = function(direction) require('luasnip').jump(direction) end,
+            },
+            keymap = { preset = 'super-tab' },
+            completion = {
+                list = {
+                    selection = { 
+                        preselect = true, 
+                        auto_insert = true,
+                    },
+                },
+                documentation = {
+                    auto_show = true,
+                    auto_show_delay_ms = 200,
+                },
+                menu = {
+                    draw = {
+                        columns = { { "kind_icon" }, { "label", gap = 1 } },
+                        components = {
+                            label = {
+                                width = { fill = true, max = 60 },
+                                text = function(ctx)
+                                    local highlights_info = require("colorful-menu").blink_highlights(ctx)
+                                    if highlights_info ~= nil then
+                                        return highlights_info.label
+                                    else
+                                        return ctx.label
+                                    end
+                                end,
+                                highlight = function(ctx)
+                                    local highlights = {}
+                                    local highlights_info = require("colorful-menu").blink_highlights(ctx)
+                                    if highlights_info ~= nil then
+                                        highlights = highlights_info.highlights
+                                    end
+                                    for _, idx in ipairs(ctx.label_matched_indices) do
+                                        table.insert(highlights, { idx, idx + 1, group = "BlinkCmpLabelMatch" })
+                                    end
+                                    return highlights
+                                end,
+                            },
+                        },
+                    },
+                },
+                -- ghost_text = { enabled = true },
+            }, 
+            appearance = {
+                use_nvim_cmp_as_default = true,
+                nerd_font_variant = 'mono'
+            },
+            sources = {
+                default = { 'lsp', 'path', 'snippets', 'buffer' },
+            },
+            signature = { enabled = true }, 
+        },
+    },
+    {
+        'neovim/nvim-lspconfig',
+        dependencies = { 'saghen/blink.cmp' },
+        opts = {
+          servers = {
+            clangd = {}, 
+            pyright = {
+                settings = {
+                    python = {
+                        analysis = { typeCheckingMode = "off" }
+                    },
+                },
+            },
           }
-        }
-      }
-      local lsp_names = {}
-      for k, _ in pairs(lsp_servers) do 
-        table.insert(lsp_names, k)
-      end
-      require("mason-lspconfig").setup {
-        ensure_installed = lsp_names
-      }
-      -- Setup lspconfig.
-      for lsp_server, cfg in pairs(lsp_servers) do
-        lspconfig[lsp_server].setup(cfg)
-      end
-    end
-  },
-  {"machakann/vim-sandwich", lazy = true},
-  { "windwp/nvim-autopairs", event = "InsertEnter", config = true, },
-  {
-    "nvim-tree/nvim-tree.lua",
-    dependencies = { "nvim-tree/nvim-web-devicons" },
-    opts = { on_attach = on_attach_change },
-  },
-  {
-    'nvim-telescope/telescope.nvim', tag = '0.1.6',
-    dependencies = { 'nvim-lua/plenary.nvim' }, 
-    config = function() 
-    local builtin = require('telescope.builtin')
-      vim.keymap.set("n", '<leader>ff', builtin.find_files, {})
-      vim.keymap.set("n", '<leader>fg', builtin.live_grep, {})
-      vim.keymap.set("n", '<leader>fb', builtin.buffers, {})
-      vim.keymap.set("n", '<leader>fh', builtin.help_tags, {})
-    end
-  },
-  { "folke/todo-comments.nvim", dependencies = { "nvim-lua/plenary.nvim" }, config = true },
-  { 
-    "akinsho/toggleterm.nvim", 
-    version = "*", 
-    config = function()
-      require("toggleterm").setup{
-        open_mapping = [[<c-\>]], 
-        direction = 'float'
-      }
-    end
-  }, 
-  { "RRethy/vim-illuminate" },
-  { "junegunn/vim-easy-align" },
-  -- { "karb94/neoscroll.nvim" },
-  { "lukas-reineke/indent-blankline.nvim", config = function() require("ibl").setup {} end, },
-  { 
-    "morhetz/gruvbox", 
-    config = function()
-      vim.cmd.colorscheme("gruvbox") 
-      vim.g.airline_theme = "gruvbox"
-      vim.opt.background = "dark"
-    end 
-  },
-  -- {
-  --   "embark-theme/vim",
-  --   config = function()
-  --     vim.cmd.colorscheme("embark")
-  --     vim.g.airline_theme = "embark"
-  --   end,
-  -- },
-  { 
-    'nvim-lualine/lualine.nvim', 
-    dependencies = { 'nvim-tree/nvim-web-devicons' }, 
-    opts = { options = { theme = "gruvbox" } } 
-  }, 
-  { 
-    "willothy/nvim-cokeline", 
-    dependencies = { "nvim-tree/nvim-web-devicons", "nvim-lua/plenary.nvim" }, 
-    config = true 
-  },
+        },
+        config = function(_, opts)
+            local lspconfig = require('lspconfig')
+            for server, config in pairs(opts.servers) do
+                config.capabilities = require('blink.cmp').get_lsp_capabilities(config.capabilities)
+                lspconfig[server].setup(config)
+            end
+        end
+    },
+    {
+        "machakann/vim-sandwich", 
+        lazy = true
+    },
+    {
+        "nvim-tree/nvim-tree.lua",
+        dependencies = { "nvim-tree/nvim-web-devicons" },
+        opts = { on_attach = on_attach_change },
+    },
+    {
+        "windwp/nvim-autopairs", 
+        event = "InsertEnter", 
+        config = true, 
+    },
+    {
+        'nvim-telescope/telescope.nvim', tag = '0.1.6',
+        dependencies = { 'nvim-lua/plenary.nvim' }, 
+        config = function() 
+            local builtin = require('telescope.builtin')
+            vim.keymap.set("n", '<leader>ff', builtin.find_files, {})
+            vim.keymap.set("n", '<leader>fg', builtin.live_grep, {})
+            vim.keymap.set("n", '<leader>fb', builtin.buffers, {})
+            vim.keymap.set("n", '<leader>fh', builtin.help_tags, {})
+        end
+    },
+    { 
+        "folke/todo-comments.nvim", 
+        dependencies = { "nvim-lua/plenary.nvim" }, 
+        config = true 
+    },
+    { 
+        "akinsho/toggleterm.nvim", 
+        version = "*", 
+        opts = {
+            open_mapping = [[<c-\>]], 
+            direction = 'float'
+        },
+    }, 
+    { 
+        -- automatically highlighting
+        "RRethy/vim-illuminate" 
+    },
+    { "junegunn/vim-easy-align" },
+    { 
+        "lukas-reineke/indent-blankline.nvim", 
+        config = function() 
+            require("ibl").setup {} 
+        end, 
+    },
+    { 
+        "morhetz/gruvbox", 
+        config = function()
+            vim.cmd.colorscheme("gruvbox") 
+            vim.g.airline_theme = "gruvbox"
+            vim.opt.background = "dark"
+            vim.cmd("highlight Normal guibg=NONE ctermbg=NONE")
+        end 
+    },
+    { 
+        'nvim-lualine/lualine.nvim', 
+        dependencies = { 'nvim-tree/nvim-web-devicons' }, 
+        opts = { 
+            options = { theme = "gruvbox" } 
+        }, 
+    }, 
+    { 
+        "willothy/nvim-cokeline", 
+        dependencies = { 
+            "nvim-tree/nvim-web-devicons", 
+            "nvim-lua/plenary.nvim" 
+        }, 
+        config = true 
+    },
 })
