@@ -42,7 +42,7 @@ vim.opt.shiftwidth = 4
 vim.opt.expandtab = true
 vim.opt.smarttab = true
 vim.opt.expandtab = true
-vim.opt.list = true
+vim.opt.list = false
 vim.opt.listchars = { tab = "► ", trail = "·" }
 vim.opt.scrolloff = 4
 vim.opt.tw = 0
@@ -110,9 +110,19 @@ require("lazy").setup({
     }, 
     {
         'saghen/blink.cmp',
-        dependencies = 'rafamadriz/friendly-snippets',
+        dependencies = { 'L3MON4D3/LuaSnip', version = 'v2.*' },
         version = '*',
         opts = {
+            snippets = {
+                expand = function(snippet) require('luasnip').lsp_expand(snippet) end,
+                active = function(filter)
+                    if filter and filter.direction then
+                        return require('luasnip').jumpable(filter.direction)
+                    end
+                        return require('luasnip').in_snippet()
+                end,
+                jump = function(direction) require('luasnip').jump(direction) end,
+            },
             keymap = { preset = 'super-tab' },
             completion = {
                 list = {
