@@ -17,19 +17,16 @@ setenv GOPROXY https://goproxy.cn
 setenv GOPATH $HOME/.local/gohome
 
 # prompt
-fish_config prompt choose arrow
+# fish_config prompt choose arrow
 fish_config theme choose Lava
-
-# conda
-if command -v conda > /dev/null 
-    eval conda "shell.fish" "hook" $argv | source
+if command -v conda > /dev/null
+    status is-interactive && eval conda "shell.fish" "hook" $argv | source
 end 
 
 # fzf
 if command -v fzf > /dev/null 
-    setenv FZF_DEFAULT_COMMAND 'fd --type f --strip-cwd-prefix --exclude=venv,.config,.git,.local --follow'
-    setenv FZF_CTRL_T_COMMAND 'fd --type f --strip-cwd-prefix --exclude=venv,.config,.git,.local --follow'
-    setenv FZF_DEFAULT_OPTS '--height 30% --layout=reverse --border'
+    setenv FZF_DEFAULT_COMMAND 'fdfind --type f --strip-cwd-prefix --exclude=venv,.config,.git,.local --follow'
+    setenv FZF_CTRL_T_COMMAND 'fdfind --type f --strip-cwd-prefix --exclude=venv,.config,.git,.local --follow'
+    setenv FZF_DEFAULT_OPTS '--height=10 --layout=reverse'
     fzf --fish | source
 end
-

@@ -1,10 +1,19 @@
-font-family = Noto Sans Mono
 font-family = FiraCode Nerd Font Mono
 font-family = Noto Sans CJK SC
-font-feature = liga,calt
+font-feature = +liga
+font-size = 15
 
 cursor-style = block
 cursor-style-blink = false
+
+window-height = 30 
+window-width = 120
+
+shell-integration-features = no-cursor,no-sudo,title
+gtk-single-instance = true
+
+background-opacity = 0.85
+background-blur = true
 
 keybind = ctrl+w>5=new_split:down
 keybind = ctrl+w>'=new_split:right
@@ -23,4 +32,3 @@ keybind = ctrl+shift+t=new_tab
 keybind = ctrl+shift+tab=previous_tab
 keybind = ctrl+tab=next_tab
 
-shell-integration-features = no-cursor,no-sudo,title

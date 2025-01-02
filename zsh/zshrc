@@ -1,0 +1,54 @@
+case $- in 
+    *i*) ;;
+    *) return;;
+esac
+
+HISTFILE="$HOME/.local/share/zsh/history"
+fpath=($fpath $HOME/.local/share/zsh/site-functions/)
+
+alias wopen="/mnt/c/Windows/explorer.exe"
+alias vi="nvim"
+alias ssh="TERM=xterm-256color /bin/ssh"
+alias ll="ls -la"
+
+
+function condainit() {
+    eval "$($HOME/.local/miniforge/bin/conda shell.zsh hook)"
+}
+
+autoload -Uz compinit
+for lib in $HOME/.local/share/zsh/lib/*.zsh; do
+    source $lib 
+done
+for p in /usr/share/zsh-*; do 
+    source $p/$(basename $p).zsh; 
+done
+
+zstyle ':completion:*' matcher-list '' 'm:{a-z}={A-Z}' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=* l:|=*'
+zstyle ':completion:*' menu select
+zstyle ":completion:*" use-cache yes
+zstyle ":completion:*" squeeze-slashes true
+zstyle ":completion:*" file-sort change
+zstyle ':completion:*' list-prompt %SAt %p: Hit TAB for more, or the character to insert%s
+zstyle ':completion:*' select-prompt %SScrolling active: current selection at %p%s
+zstyle ':completion:*' cache-path $HOME/.local/share/zsh/zcompdumpcache
+compinit -d $HOME/.local/share/zsh/zcompdump
+
+source $HOME/.local/share/zsh/theme/p10k/powerlevel10k.zsh-theme
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+    source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# fzf
+FIND_CMD=find
+if command -v fd &>/dev/null; then
+    FIND_CMD=fd
+elif command -v fdfind &>/dev/null; then
+    FIND_CMD=fdfind
+fi
+export FZF_DEFAULT_OPTS="--height=10 --layout=reverse"
+export FZF_DEFAULT_COMMAND="${FIND_CMD} --type f --strip-cwd-prefix --follow --exclude=.venv,.config,.git,.local"
+unset FIND_CMD
+eval "$(fzf --zsh)"
+
