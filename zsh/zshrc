@@ -1,0 +1,45 @@
+alias wopen="/mnt/c/Windows/explorer.exe"
+alias vi="nvim"
+alias ssh="TERM=xterm-256color /bin/ssh"
+alias ll="ls -la"
+
+fpath=($fpath $ZSH_CONFIG_HOME/completion)
+_zsh_add_global_path() {
+    case ":$PATH:" in
+    *:"$1":*)
+        ;;
+    *)
+        export PATH="$1:$PATH"
+    esac
+}
+_zsh_add_global_path /usr/bin
+_zsh_add_global_path $HOME/.local/bin
+_zsh_add_global_path /opt/zig
+_zsh_add_global_path /opt/go/bin
+_zsh_add_global_path /opt/node/bin/
+unset _zsh_add_global_path
+
+function condainit() {
+    eval "$($HOME/.local/miniforge/bin/conda shell.zsh hook)"
+}
+
+autoload -Uz compinit && compinit
+zstyle ':completion:*' matcher-list '' 'm:{a-z}={A-Z}' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=* l:|=*'
+zstyle ':completion:*' menu select=long
+zstyle ":completion:*" use-cache yes
+zstyle ":completion:*" squeeze-slashes false
+zstyle ":completion:*" file-sort change
+
+source $HOME/.config/zsh/theme/p10k/powerlevel10k.zsh-theme
+autoload -U compinit && compinit
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+for lib in $HOME/.config/zsh/lib/*.zsh; do
+    source $lib 
+done
+
+
+eval "$(fzf --zsh)"

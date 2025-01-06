@@ -171,7 +171,11 @@ require("lazy").setup({
         dependencies = { "nvim-tree/nvim-web-devicons" },
         opts = { on_attach = on_attach_change },
     },
-    { "windwp/nvim-autopairs", event = "InsertEnter", config = true, },
+    {
+        "windwp/nvim-autopairs", 
+        event = "InsertEnter", 
+        config = true, 
+    },
     {
         'nvim-telescope/telescope.nvim', tag = '0.1.6',
         dependencies = { 'nvim-lua/plenary.nvim' }, 
@@ -191,12 +195,10 @@ require("lazy").setup({
     { 
         "akinsho/toggleterm.nvim", 
         version = "*", 
-        config = function()
-        require("toggleterm").setup{
+        opts = {
             open_mapping = [[<c-\>]], 
             direction = 'float'
-        }
-        end
+        },
     }, 
     { 
         -- automatically highlighting
@@ -212,19 +214,24 @@ require("lazy").setup({
     { 
         "morhetz/gruvbox", 
         config = function()
-        vim.cmd.colorscheme("gruvbox") 
-        vim.g.airline_theme = "gruvbox"
-        vim.opt.background = "dark"
+            vim.cmd.colorscheme("gruvbox") 
+            vim.g.airline_theme = "gruvbox"
+            vim.opt.background = "dark"
         end 
     },
     { 
         'nvim-lualine/lualine.nvim', 
         dependencies = { 'nvim-tree/nvim-web-devicons' }, 
-        opts = { options = { theme = "gruvbox" } } 
+        opts = { 
+            options = { theme = "gruvbox" } 
+        }, 
     }, 
     { 
         "willothy/nvim-cokeline", 
-        dependencies = { "nvim-tree/nvim-web-devicons", "nvim-lua/plenary.nvim" }, 
+        dependencies = { 
+            "nvim-tree/nvim-web-devicons", 
+            "nvim-lua/plenary.nvim" 
+        }, 
         config = true 
     },
 })
