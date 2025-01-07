@@ -3,7 +3,7 @@ alias vi="nvim"
 alias ssh="TERM=xterm-256color /bin/ssh"
 alias ll="ls -la"
 
-fpath=($fpath $HOME/.config/zsh/completion)
+fpath=($fpath $HOME/.local/share/zsh/site-functions/)
 _zsh_add_global_path() {
     case ":$PATH:" in
     *:"$1":*)
@@ -30,13 +30,13 @@ zstyle ":completion:*" use-cache yes
 zstyle ":completion:*" squeeze-slashes false
 zstyle ":completion:*" file-sort change
 
-source $HOME/.config/zsh/theme/p10k/powerlevel10k.zsh-theme
+source $HOME/.local/share/zsh/theme/p10k/powerlevel10k.zsh-theme
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-for lib in $HOME/.config/zsh/lib/*.zsh; do
+for lib in $HOME/.local/share/zsh/lib/*.zsh; do
     source $lib 
 done
 autoload -U compinit && compinit

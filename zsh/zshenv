@@ -1,3 +1,5 @@
+HISTFILE="$HOME/.local/share/zsh/history"
+
 export EDITOR="nvim"
 
 # go
