@@ -10,7 +10,7 @@ window-height = 30
 window-width = 120
 
 shell-integration-features = no-cursor,no-sudo,title
-gtk-single-instance = false
+gtk-single-instance = true
 
 keybind = ctrl+w>5=new_split:down
 keybind = ctrl+w>'=new_split:right
