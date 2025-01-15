@@ -3,7 +3,8 @@ set -e
 
 ZSH_PREFIX=$HOME/.local/share/zsh
 function download() {
-    curl -f -o $ZSH_PREFIX/$2 $1
+    curl -sf -o $ZSH_PREFIX/$2 $1
+    echo "download $2"
 }
 function download_omz() {
     local url="https://gitee.com/mirrors/oh-my-zsh/raw/master/$1"
@@ -21,7 +22,8 @@ download_omz lib/git.zsh
 # theme 
 mkdir -p $ZSH_PREFIX/theme/
 rm -rf $ZSH_PREFIX/theme/p10k
-git clone --depth=1 https://gitee.com/romkatv/powerlevel10k.git $ZSH_PREFIX/theme/p10k
+git clone --quiet --depth=1 https://gitee.com/romkatv/powerlevel10k.git $ZSH_PREFIX/theme/p10k
+echo "download p10k"
 
 # site-functions
 mkdir -p $ZSH_PREFIX/site-functions/
