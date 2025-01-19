@@ -126,7 +126,10 @@ require("lazy").setup({
             keymap = { preset = 'super-tab' },
             completion = {
                 list = {
-                    selection = "auto_insert",
+                    selection = { 
+                        preselect = true, 
+                        auto_insert = true,
+                    },
                 },
                 documentation = {
                     auto_show = true,
