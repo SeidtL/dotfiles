@@ -60,30 +60,10 @@ vim.opt.pumheight = 8
 vim.opt.completeopt = "menu,menuone,noselect"
 vim.o.whichwrap = vim.o.whichwrap .. "<,>,h,l"
 
+
+vim.cmd('source ' .. vim.fn.stdpath('config') .. '/vimrc')
 local opt = { noremap = true, silent = true }
 local KM = vim.keymap
-vim.g.mapleader = " "
-KM.set({"i"}, "jk", "<esc>", opt)
-KM.set({"n"}, "H", "<s-up>", opt)
-KM.set({"n"}, "L", "<s-down>", opt)
-KM.set({"n"}, "<leader>v", "<c-v>", opt)
-KM.set({"n"}, "<leader>t", ":NvimTreeToggle<return>", opt)
-KM.set({"n"}, "n", "nzz", opt)
-KM.set({"n"}, "N", "Nzz", opt)
-KM.set({"n"}, "S", ":w<Return>", opt)
-KM.set({"n"}, "Q", ":q<Return>", opt)
-KM.set({"n"}, "ss", ":split<Return><C-w>w", opt)
-KM.set({"n"}, "sv", ":vsplit<Return><C-w>w", opt)
-KM.set({"n"}, "<Space>", "<C-w>w", opt)
-KM.set({"n"}, "sq", "<C-w>q", opt)
-KM.set({"n"}, "sh", "<C-w>h", opt)
-KM.set({"n"}, "sk", "<C-w>k", opt)
-KM.set({"n"}, "sj", "<C-w>j", opt)
-KM.set({"n"}, "sl", "<C-w>l", opt)
-KM.set({"n"}, "s<left>", "<C-w>5<", opt)
-KM.set({"n"}, "s<right>", "<C-w>5>", opt)
-KM.set({"n"}, "s<up>", "<C-w>5+", opt)
-KM.set({"n"}, "s<down>", "<C-w>-", opt)
 KM.set({"x"}, "ga", "<Plug>(EasyAlign)", opt)
 KM.set({"n"}, "ga", "<Plug>(EasyAlign)", opt)
 KM.set({"n"}, "ff", "<cmd>lua vim.lsp.buf.format { async = true }<CR>", opt)
