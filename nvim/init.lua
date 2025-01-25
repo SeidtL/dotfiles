@@ -90,7 +90,13 @@ require("lazy").setup({
     }, 
     {
         'saghen/blink.cmp',
-        dependencies = { 'L3MON4D3/LuaSnip', version = 'v2.*' },
+        dependencies = { 
+            {
+                'L3MON4D3/LuaSnip', 
+                version = 'v2.*'
+            },
+            'xzbdmw/colorful-menu.nvim',
+        },
         version = '*',
         opts = {
             snippets = {
@@ -115,6 +121,36 @@ require("lazy").setup({
                     auto_show = true,
                     auto_show_delay_ms = 200,
                 },
+                menu = {
+                    draw = {
+                        columns = { { "kind_icon" }, { "label", gap = 1 } },
+                        components = {
+                            label = {
+                                width = { fill = true, max = 60 },
+                                text = function(ctx)
+                                    local highlights_info = require("colorful-menu").blink_highlights(ctx)
+                                    if highlights_info ~= nil then
+                                        return highlights_info.label
+                                    else
+                                        return ctx.label
+                                    end
+                                end,
+                                highlight = function(ctx)
+                                    local highlights = {}
+                                    local highlights_info = require("colorful-menu").blink_highlights(ctx)
+                                    if highlights_info ~= nil then
+                                        highlights = highlights_info.highlights
+                                    end
+                                    for _, idx in ipairs(ctx.label_matched_indices) do
+                                        table.insert(highlights, { idx, idx + 1, group = "BlinkCmpLabelMatch" })
+                                    end
+                                    return highlights
+                                end,
+                            },
+                        },
+                    },
+                },
+                -- ghost_text = { enabled = true },
             }, 
             appearance = {
                 use_nvim_cmp_as_default = true,
