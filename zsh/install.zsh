@@ -33,6 +33,6 @@ if command -v rustup &>/dev/null; then
 fi
 download https://raw.gitcode.com/gh_mirrors/co/conda-zsh-completion/raw/main/_conda site-functions/_conda
 
-ln -sf $HOME/.config/zsh/zshrc $HOME/.zshrc 
+echo 'source $HOME/.config/zsh/zshrc' >> "$HOME/.zshrc"
 ln -sf $HOME/.config/zsh/zshenv $HOME/.zshenv
 
