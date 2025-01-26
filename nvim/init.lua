@@ -1,3 +1,5 @@
+vim.cmd('source ' .. vim.fn.stdpath('config') .. '/vimrc')
+
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
     vim.fn.system({
@@ -11,13 +13,6 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-vim.cmd[[
-    syntax on
-    filetype on
-    filetype indent on
-    filetype plugin on
-    filetype plugin indent on
-]]
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwplugin = 1
 vim.opt.wrap = false
@@ -61,7 +56,6 @@ vim.opt.completeopt = "menu,menuone,noselect"
 vim.o.whichwrap = vim.o.whichwrap .. "<,>,h,l"
 
 
-vim.cmd('source ' .. vim.fn.stdpath('config') .. '/vimrc')
 local opt = { noremap = true, silent = true }
 local KM = vim.keymap
 KM.set({"x"}, "ga", "<Plug>(EasyAlign)", opt)
