@@ -36,6 +36,6 @@ download https://raw.gitcode.com/gh_mirrors/co/conda-zsh-completion/raw/main/_co
 if ! grep 'source $HOME/.config/zsh/zshrc' ~/.zshrc &> /dev/null; then 
     echo 'source $HOME/.config/zsh/zshrc' >> "$HOME/.zshrc";
 fi
-ln -sf $HOME/.config/profile.sh $HOME/.zprofile 
+ln -sf $HOME/.config/profile.sh $HOME/.zshenv
 ln -sf $HOME/.config/profile.sh $HOME/.profile
 
