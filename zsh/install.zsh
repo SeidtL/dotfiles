@@ -37,5 +37,3 @@ if ! grep 'source $HOME/.config/zsh/zshrc' ~/.zshrc &> /dev/null; then
     echo 'source $HOME/.config/zsh/zshrc' >> "$HOME/.zshrc";
 fi
 ln -sf $HOME/.config/profile.sh $HOME/.zshenv
-ln -sf $HOME/.config/profile.sh $HOME/.profile
-

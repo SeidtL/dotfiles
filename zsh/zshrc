@@ -8,21 +8,30 @@ fpath=($fpath $HOME/.local/share/zsh/site-functions/)
 
 alias wopen="/mnt/c/Windows/explorer.exe"
 alias vi="nvim"
-alias ssh="TERM=xterm-256color /bin/ssh"
+alias ssh="TERM=xterm-256color /usr/bin/ssh"
 alias ll="ls -la"
 
+if [[ $(uname -s)  == "Darwin" ]]; then
+    source $HOME/.config/zsh/mac.sh
+fi
 
+CONDA_FORGE_DEFAULT_ROOT="$HOME/.local/miniforge"
+CONDA_FORGE_ROOT="${CONDA_FORGE_ROOT:-$CONDA_FORGE_DEFAULT_ROOT}"
 function condainit() {
-    eval "$($HOME/.local/miniforge/bin/conda shell.zsh hook)"
+    eval "$($CONDA_FORGE_ROOT/bin/conda shell.zsh hook)"
 }
 
 autoload -Uz compinit
 for lib in $HOME/.local/share/zsh/lib/*.zsh; do
     source $lib 
 done
-for p in /usr/share/zsh-*; do 
+
+SHARE_DEFAULT_PATH="/usr/share"
+SHARE_PATH="${SHARE_PATH:-$SHARE_DEFAULT_PATH}"
+for p in "$SHARE_PATH"/zsh-*; do 
     source $p/$(basename $p).zsh; 
 done
+unset SHARE_DEFAULT_PATH SHARE_PATH CONDA_FORGE_DEFAULT_ROOT
 
 zstyle ':completion:*' matcher-list '' 'm:{a-z}={A-Z}' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=* l:|=*'
 zstyle ':completion:*' menu select
@@ -40,15 +49,5 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-# fzf
-FIND_CMD=find
-if command -v fd &>/dev/null; then
-    FIND_CMD=fd
-elif command -v fdfind &>/dev/null; then
-    FIND_CMD=fdfind
-fi
-export FZF_DEFAULT_OPTS="--height=10 --layout=reverse"
-export FZF_DEFAULT_COMMAND="${FIND_CMD} --type f --strip-cwd-prefix --follow --exclude=.venv,.config,.git,.local"
-unset FIND_CMD
 eval "$(fzf --zsh)"
 
