@@ -1,7 +1,11 @@
-alias vi=nvim
-alias ssh="TERM=xterm-256color /bin/ssh"
+if not status is-interactive
+    return
+end
 
-fish_add_path -U $HOME/.cargo/bin $HOME/.local/miniforge/bin
+alias vi=nvim
+alias ssh="TERM=xterm-256color /usr/bin/ssh"
+
+fish_add_path -U $HOME/.cargo/bin
 
 # fish
 set __fish_git_prompt_showuntrackedfiles 'yes'
@@ -11,17 +15,17 @@ set __fish_git_prompt_showupstream 'none'
 set -g fish_prompt_pwd_dir_length 3
 set fish_greeting
 
+if test (uname) = "Darwin"
+    source $__fish_config_dir/mac.fish
+end
+
 # env 
 setenv GO11MODULE on 
 setenv GOPROXY https://goproxy.cn 
 setenv GOPATH $HOME/.local/gohome
 
 # prompt
-# fish_config prompt choose arrow
 fish_config theme choose Lava
-if command -v conda > /dev/null
-    status is-interactive && eval conda "shell.fish" "hook" $argv | source
-end 
 
 # fzf
 if command -v fzf > /dev/null 

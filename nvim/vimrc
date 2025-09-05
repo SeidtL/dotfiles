@@ -8,6 +8,7 @@ set tabstop=4
 set shiftwidth=4
 set expandtab
 set softtabstop=4
+set clipboard+=unnamed
 
 set noerrorbells
 set novisualbell
@@ -31,5 +32,5 @@ nnoremap <silent> sj <C-w>j
 nnoremap <silent> sl <C-w>l
 nnoremap <silent> s<left> <C-w>5<
 nnoremap <silent> s<right> <C-w>5>
-nnoremap <silent> s<up> <C-w>5+
-nnoremap <silent> s<down> <C-w>-
+nnoremap <silent> s<up> <c-w>5+
+nnoremap <silent> s<down> <c-w>-
