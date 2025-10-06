@@ -2,18 +2,17 @@ case $- in
     *i*) ;;
     *) return;;
 esac
+ZSH_LOCAL_PREFIX="$HOME/.local/share/zsh"
 
-HISTFILE="$HOME/.local/share/zsh/history"
-fpath=($fpath $HOME/.local/share/zsh/site-functions/)
+HISTFILE="$ZSH_LOCAL_PREFIX/history"
+fpath=($fpath $ZSH_LOCAL_PREFIX/site-functions/)
 
 alias wopen="/mnt/c/Windows/explorer.exe"
 alias vi="nvim"
 alias ssh="TERM=xterm-256color /usr/bin/ssh"
 alias ll="ls -la"
 
-if [[ $(uname -s)  == "Darwin" ]]; then
-    source $HOME/.config/zsh/mac.sh
-fi
+[[ $(uname -s) == "Darwin" ]] && source "$HOME/.config/zsh/mac.sh"
 
 CONDA_FORGE_DEFAULT_ROOT="$HOME/.local/miniforge"
 CONDA_FORGE_ROOT="${CONDA_FORGE_ROOT:-$CONDA_FORGE_DEFAULT_ROOT}"
@@ -22,13 +21,13 @@ function condainit() {
 }
 
 autoload -Uz compinit
-for lib in $HOME/.local/share/zsh/lib/*.zsh; do
+for lib in $ZSH_LOCAL_PREFIX/lib/*.zsh; do
     source $lib 
 done
 
 SHARE_DEFAULT_PATH="/usr/share"
 SHARE_PATH="${SHARE_PATH:-$SHARE_DEFAULT_PATH}"
-for p in "$SHARE_PATH"/zsh-*; do 
+for p in "$SHARE_PATH"/zsh-*(N); do 
     source $p/$(basename $p).zsh; 
 done
 unset SHARE_DEFAULT_PATH SHARE_PATH CONDA_FORGE_DEFAULT_ROOT
@@ -40,10 +39,10 @@ zstyle ":completion:*" squeeze-slashes true
 zstyle ":completion:*" file-sort change
 zstyle ':completion:*' list-prompt %SAt %p: Hit TAB for more, or the character to insert%s
 zstyle ':completion:*' select-prompt %SScrolling active: current selection at %p%s
-zstyle ':completion:*' cache-path $HOME/.local/share/zsh/zcompdumpcache
-compinit -d $HOME/.local/share/zsh/zcompdump
+zstyle ':completion:*' cache-path $ZSH_LOCAL_PREFIX/zcompdumpcache
+compinit -d $ZSH_LOCAL_PREFIX/zcompdump
 
-source $HOME/.local/share/zsh/theme/p10k/powerlevel10k.zsh-theme
+source $ZSH_LOCAL_PREFIX/theme/p10k/powerlevel10k.zsh-theme
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
     source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
@@ -51,3 +50,4 @@ fi
 
 eval "$(fzf --zsh)"
 
+unset ZSH_LOCAL_PREFIX

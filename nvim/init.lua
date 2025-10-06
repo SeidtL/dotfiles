@@ -68,6 +68,7 @@ KM.set({"n"}, "<Leader>p", "<Plug>(cokeline-switch-prev)", { silent = true })
 KM.set({"n"}, "<Leader>n", "<Plug>(cokeline-switch-next)", { silent = true })
 KM.set({"n"}, "<Leader>n", "<Plug>(cokeline-switch-next)", { silent = true })
 KM.set({"n"}, "<Leader>d", ":bd<Return>", { silent = true })
+KM.set({"n"}, "<Leader>t", ":NvimTreeToggle<Return>", { silent = true })
 
 require("lazy").setup({
     {
@@ -227,15 +228,15 @@ require("lazy").setup({
             require("ibl").setup {} 
         end, 
     },
-    { 
-        "morhetz/gruvbox", 
-        config = function()
-            vim.cmd.colorscheme("gruvbox") 
-            vim.g.airline_theme = "gruvbox"
-            vim.opt.background = "dark"
-            vim.cmd("highlight Normal guibg=NONE ctermbg=NONE")
-        end 
-    },
+    -- { 
+    --     "morhetz/gruvbox", 
+    --     config = function()
+    --         vim.cmd.colorscheme("gruvbox") 
+    --         vim.g.airline_theme = "gruvbox"
+    --         vim.opt.background = "dark"
+    --         vim.cmd("highlight Normal guibg=NONE ctermbg=NONE")
+    --     end 
+    -- },
     { 
         'nvim-lualine/lualine.nvim', 
         dependencies = { 'nvim-tree/nvim-web-devicons' }, 

@@ -15,8 +15,8 @@ set novisualbell
 
 let mapleader = " "
 inoremap <silent> jk <esc>
-nnoremap <silent> H <s-up>
-nnoremap <silent> L <s-down>
+nnoremap <silent> H ^
+nnoremap <silent> L $
 nnoremap <silent> <leader>v <c-v>
 nnoremap <silent> n nzz
 nnoremap <silent> N Nzz
@@ -34,3 +34,5 @@ nnoremap <silent> s<left> <C-w>5<
 nnoremap <silent> s<right> <C-w>5>
 nnoremap <silent> s<up> <c-w>5+
 nnoremap <silent> s<down> <c-w>-
+nnoremap <silent> <PageUp> <c-u>zz
+nnoremap <silent> <PageDown> <c-d>zz
