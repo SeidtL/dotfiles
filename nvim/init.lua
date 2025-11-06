@@ -172,21 +172,15 @@ require("lazy").setup({
           }
         },
         config = function(_, opts)
-            local lspconfig = require('lspconfig')
             for server, config in pairs(opts.servers) do
                 config.capabilities = require('blink.cmp').get_lsp_capabilities(config.capabilities)
-                lspconfig[server].setup(config)
+                vim.lsp.config(server, config)
             end
         end
     },
     {
         "machakann/vim-sandwich", 
         lazy = true
-    },
-    {
-        "nvim-tree/nvim-tree.lua",
-        dependencies = { "nvim-tree/nvim-web-devicons" },
-        opts = { on_attach = on_attach_change },
     },
     {
         "windwp/nvim-autopairs", 
