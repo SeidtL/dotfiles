@@ -12,7 +12,6 @@ add_global_path $HOME/.cargo/bin
 add_global_path /opt/zig
 add_global_path /opt/go/bin
 add_global_path /opt/node/bin
-unset add_global_path
 
 export EDITOR="nvim"
 
@@ -20,12 +19,7 @@ export GO111MODULE=on
 export GOPROXY=https://goproxy.cn
 export GOPATH=$HOME/.local/gohome
 
-FIND_CMD=find
-if command -v fd &>/dev/null; then
-    FIND_CMD=fd
-elif command -v fdfind &>/dev/null; then
-    FIND_CMD=fdfind
-fi
+FIND_CMD=$(command -v fd || command -v fdfind || echo find)
 export FZF_DEFAULT_OPTS="--height=10 --layout=reverse"
 export FZF_DEFAULT_COMMAND="${FIND_CMD} --type f --strip-cwd-prefix --follow --exclude=.venv,.config,.git,.local"
 unset FIND_CMD
