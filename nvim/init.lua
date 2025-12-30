@@ -69,6 +69,7 @@ KM.set({"n"}, "<Leader>n", "<Plug>(cokeline-switch-next)", { silent = true })
 KM.set({"n"}, "<Leader>n", "<Plug>(cokeline-switch-next)", { silent = true })
 KM.set({"n"}, "<Leader>d", ":bd<Return>", { silent = true })
 KM.set({"n"}, "<Leader>t", ":NvimTreeToggle<Return>", { silent = true })
+KM.set({"n"}, "<Leader>e", ":lua vim.diagnostic.open_float()<Return>", { silent = true })
 
 require("lazy").setup({
     {
@@ -231,11 +232,19 @@ require("lazy").setup({
     --         vim.cmd("highlight Normal guibg=NONE ctermbg=NONE")
     --     end 
     -- },
+    {
+        "folke/tokyonight.nvim",
+        lazy = false,
+        config = function() 
+            vim.cmd.colorscheme("tokyonight-night")
+            vim.opt.background = "dark"
+        end
+    },
     { 
         'nvim-lualine/lualine.nvim', 
         dependencies = { 'nvim-tree/nvim-web-devicons' }, 
         opts = { 
-            options = { theme = "gruvbox" } 
+            options = { theme = "tokyonight-storm" } 
         }, 
     }, 
     { 
