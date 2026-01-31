@@ -7,10 +7,7 @@ ZSH_LOCAL_PREFIX="$HOME/.local/share/zsh"
 HISTFILE="$ZSH_LOCAL_PREFIX/history"
 fpath=($fpath $ZSH_LOCAL_PREFIX/site-functions/)
 
-alias wopen="/mnt/c/Windows/explorer.exe"
-alias vi="nvim"
-alias ssh="TERM=xterm-256color /usr/bin/ssh"
-alias ll="ls -la"
+source $HOME/.config/alias.sh
 
 [[ $(uname -s) == "Darwin" ]] && source "$HOME/.config/zsh/mac.sh"
 

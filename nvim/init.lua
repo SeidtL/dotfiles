@@ -68,7 +68,6 @@ KM.set({"n"}, "<Leader>p", "<Plug>(cokeline-switch-prev)", { silent = true })
 KM.set({"n"}, "<Leader>n", "<Plug>(cokeline-switch-next)", { silent = true })
 KM.set({"n"}, "<Leader>n", "<Plug>(cokeline-switch-next)", { silent = true })
 KM.set({"n"}, "<Leader>d", ":bd<Return>", { silent = true })
-KM.set({"n"}, "<Leader>t", ":NvimTreeToggle<Return>", { silent = true })
 KM.set({"n"}, "<Leader>e", ":lua vim.diagnostic.open_float()<Return>", { silent = true })
 
 require("lazy").setup({
@@ -78,9 +77,7 @@ require("lazy").setup({
         build = ":MasonUpdate",
         config = function() 
             require("mason").setup()
-            require("mason-lspconfig").setup({
-                ensure_installed = { "clangd", "pyright" }
-            })
+            require("mason-lspconfig").setup()
         end 
     }, 
     {
@@ -195,6 +192,7 @@ require("lazy").setup({
             local builtin = require('telescope.builtin')
             vim.keymap.set("n", '<leader>ff', builtin.find_files, {})
             vim.keymap.set("n", '<leader>fg', builtin.live_grep, {})
+            vim.keymap.set("n", '<leader>fc', builtin.current_buffer_fuzzy_find, {})
             vim.keymap.set("n", '<leader>fb', builtin.buffers, {})
             vim.keymap.set("n", '<leader>fh', builtin.help_tags, {})
         end
@@ -213,7 +211,6 @@ require("lazy").setup({
         },
     }, 
     { 
-        -- automatically highlighting
         "RRethy/vim-illuminate" 
     },
     { "junegunn/vim-easy-align" },
@@ -223,28 +220,21 @@ require("lazy").setup({
             require("ibl").setup {} 
         end, 
     },
-    -- { 
-    --     "morhetz/gruvbox", 
-    --     config = function()
-    --         vim.cmd.colorscheme("gruvbox") 
-    --         vim.g.airline_theme = "gruvbox"
-    --         vim.opt.background = "dark"
-    --         vim.cmd("highlight Normal guibg=NONE ctermbg=NONE")
-    --     end 
-    -- },
     {
-        "folke/tokyonight.nvim",
-        lazy = false,
-        config = function() 
-            vim.cmd.colorscheme("tokyonight-night")
-            vim.opt.background = "dark"
-        end
+      "navarasu/onedark.nvim",
+      priority = 1000,
+      config = function()
+          require('onedark').setup {
+              style = 'darker'
+          }
+          require('onedark').load()
+      end
     },
     { 
         'nvim-lualine/lualine.nvim', 
         dependencies = { 'nvim-tree/nvim-web-devicons' }, 
         opts = { 
-            options = { theme = "tokyonight-storm" } 
+            options = { theme = "onedark" } 
         }, 
     }, 
     { 
