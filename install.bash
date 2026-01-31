@@ -7,3 +7,5 @@ bash $CURRENT_DIR/zsh/install.bash
 ln -sf $CURRENT_DIR/tmux.conf $HOME/.tmux.conf
 ln -sf $CURRENT_DIR/nvim/vimrc $HOME/.vimrc
 ln -sf $CURRENT_DIR/profile.sh $HOME/.zshenv
+grep -qF "source \$HOME/.config/zsh/zshrc" ~/.zshrc || \
+    printf "\nsource \$HOME/.config/zsh/zshrc\n" >> ~/.zshrc
