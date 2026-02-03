@@ -1,0 +1,1 @@
+../../../ignore-shell/alias.sh

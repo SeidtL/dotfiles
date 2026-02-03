@@ -18,8 +18,3 @@ export EDITOR="nvim"
 export GO111MODULE=on
 export GOPROXY=https://goproxy.cn
 export GOPATH=$HOME/.local/gohome
-
-FIND_CMD=$(command -v fd || command -v fdfind || echo find)
-export FZF_DEFAULT_OPTS="--height=10 --layout=reverse"
-export FZF_DEFAULT_COMMAND="${FIND_CMD} --type f --strip-cwd-prefix --follow --exclude=.venv,.config,.git,.local"
-unset FIND_CMD

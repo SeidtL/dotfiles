@@ -2,14 +2,19 @@ case $- in
     *i*) ;;
     *) return;;
 esac
+
 ZSH_LOCAL_PREFIX="$HOME/.local/share/zsh"
 
 HISTFILE="$ZSH_LOCAL_PREFIX/history"
 fpath=($fpath $ZSH_LOCAL_PREFIX/site-functions/)
 
-source $HOME/.config/alias.sh
+source $HOME/.config/zsh/alias.sh
 
-[[ $(uname -s) == "Darwin" ]] && source "$HOME/.config/zsh/mac.sh"
+[[ ! -f "$ZSH_LOCAL_PREFIX/installed" ]] && \
+    "$HOME/.config/zsh/install.zsh" && \
+    touch "$ZSH_LOCAL_PREFIX/installed"
+
+[[ $(uname -s) == "Darwin" ]] && source "$HOME/.config/zsh/mac.zsh"
 
 CONDA_FORGE_DEFAULT_ROOT="$HOME/.local/miniforge"
 CONDA_FORGE_ROOT="${CONDA_FORGE_ROOT:-$CONDA_FORGE_DEFAULT_ROOT}"

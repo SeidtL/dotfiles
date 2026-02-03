@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/usr/bin/env zsh
 set -e
 
 ZSH_PREFIX=$HOME/.local/share/zsh
@@ -34,9 +34,4 @@ if command -v rustc &>/dev/null; then
     cp $rust_sysroot/share/zsh/site-functions/_cargo $ZSH_PREFIX/site-functions/_cargo
     rustup completions zsh > $ZSH_PREFIX/site-functions/_rustup
 fi
-download https://raw.gitcode.com/gh_mirrors/co/conda-zsh-completion/raw/main/_conda site-functions/_conda
-
-if ! grep 'source $HOME/.config/zsh/zshrc' ~/.zshrc &> /dev/null; then 
-    echo 'source $HOME/.config/zsh/zshrc' >> "$HOME/.zshrc";
-fi
-
+# download https://raw.gitcode.com/gh_mirrors/co/conda-zsh-completion/raw/main/_conda site-functions/_conda
