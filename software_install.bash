@@ -90,5 +90,6 @@ install_node
 install_golang
 
 install_yazi
-install_nvim
+sudo ln -sf /opt/yazi/yazi /usr/local/bin/yazi
 
+install_nvim
