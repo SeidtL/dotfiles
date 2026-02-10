@@ -264,7 +264,13 @@ class Stow:
 
             # Handle existing target
             adopted = False
-            if target_link.exists() or target_link.is_symlink():
+            # First, handle broken symlinks
+            if target_link.is_symlink() and not target_link.exists():
+                self._log(1, f"Removing broken symlink: {self._format_path(target_link)}")
+                if not self.simulate:
+                    target_link.unlink()
+            # Then handle existing files/valid symlinks
+            elif target_link.exists() or target_link.is_symlink():
                 if self._is_owned_by_package(target_link, package_path):
                     self._log(3, f"Already owned: {self._format_path(target_link)}")
                     continue
