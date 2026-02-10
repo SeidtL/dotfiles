@@ -30,9 +30,9 @@ import argparse
 import re
 from pathlib import Path
 import sys
-from typing import Iterator
+from typing import Iterator, Optional, Tuple
 
-__version__ = "1.0.0"
+__version__ = (0, 1, 0)
 
 
 class Stow:
@@ -44,9 +44,9 @@ class Stow:
         target_dir: Path,
         simulate: bool = False,
         verbose: int = 0,
-        ignore: str | None = None,
-        defer: str | None = None,
-        override: str | None = None,
+        ignore: Optional[str] = None,
+        defer: Optional[str] = None,
+        override: Optional[str] = None,
         adopt: bool = False,
     ):
         """
@@ -80,6 +80,16 @@ class Stow:
         if self.verbose >= level:
             print(message)
 
+    def _format_path(self, path: Path) -> str:
+        """Format path for display, replacing $HOME with ~."""
+        try:
+            home = Path.home()
+            if path.is_absolute() and self._is_relative_to(path, home):
+                return "~" / path.relative_to(home)
+        except (ValueError, OSError):
+            pass
+        return str(path)
+
     def _get_package_path(self, package_name: str) -> Path:
         """Get the full path to a package (actual directory name)."""
         return self.stow_dir / package_name
@@ -104,13 +114,21 @@ class Stow:
         """Check if a path should be ignored."""
         # Ignore files/directories starting with dot
         if path.name.startswith("."):
-            self._log(3, f"Ignoring dotfile: {path}")
+            self._log(3, f"Ignoring dotfile: {self._format_path(path)}")
             return True
         if self.ignore_pattern:
             if self.ignore_pattern.search(path.name):
-                self._log(3, f"Ignoring: {path}")
+                self._log(3, f"Ignoring: {self._format_path(path)}")
                 return True
         return False
+
+    def _is_relative_to(self, path: Path, other: Path) -> bool:
+        """Check if path is relative to other (Python 3.8 compatibility)."""
+        try:
+            path.relative_to(other)
+            return True
+        except ValueError:
+            return False
 
     def _is_owned_by_package(self, target_link: Path, package_path: Path) -> bool:
         """Check if a symlink points to a file within the given package.
@@ -130,11 +148,11 @@ class Stow:
                 link_target = (target_link.parent / link_target).resolve()
 
             # Check if the (first hop) target is within the package
-            return link_target.is_relative_to(package_path)
+            return self._is_relative_to(link_target, package_path)
         except (OSError, ValueError):
             return False
 
-    def _find_owning_package(self, target_link: Path) -> Path | None:
+    def _find_owning_package(self, target_link: Path) -> Optional[Path]:
         """Find which package owns a given symlink."""
         if not target_link.is_symlink():
             return None
@@ -147,7 +165,7 @@ class Stow:
                 if item.name.startswith("dot-"):
                     # For "dot-" packages, check against the transformed path
                     pkg_path = item.parent / ("." + item.name[4:])
-                if resolved.is_relative_to(pkg_path):
+                if self._is_relative_to(resolved, pkg_path):
                     return item
         except (OSError, ValueError):
             pass
@@ -168,7 +186,7 @@ class Stow:
         # Check if it's owned by another package
         owner = self._find_owning_package(target_link)
         if owner and not self._is_owned_by_package(target_link, self._get_package_path(owner.name)):
-            self._log(2, f"Deferring: {target_link} (owned by {owner.name})")
+            self._log(2, f"Deferring: {self._format_path(target_link)} (owned by {owner.name})")
             return True
 
         return False
@@ -182,12 +200,12 @@ class Stow:
             return False
 
         if self.override_pattern.search(target_link.name):
-            self._log(2, f"Overriding: {target_link}")
+            self._log(2, f"Overriding: {self._format_path(target_link)}")
             return True
 
         return False
 
-    def iter_stow_pairs(self, package_name: str) -> Iterator[tuple[Path, Path]]:
+    def iter_stow_pairs(self, package_name: str) -> Iterator[Tuple[Path, Path]]:
         """
         Generate (source_file, target_link) pairs for a package.
 
@@ -248,21 +266,21 @@ class Stow:
             adopted = False
             if target_link.exists() or target_link.is_symlink():
                 if self._is_owned_by_package(target_link, package_path):
-                    self._log(3, f"Already owned: {target_link}")
+                    self._log(3, f"Already owned: {self._format_path(target_link)}")
                     continue
 
                 # Adopt: handle existing target file
                 if self.adopt and target_link.is_file() and not target_link.is_symlink():
                     if not source_file.exists():
                         # Package file doesn't exist: move target into package
-                        self._log(1, f"Adopting: {target_link} -> {source_file}")
+                        self._log(1, f"Adopting: {self._format_path(target_link)} -> {self._format_path(source_file)}")
                         if not self.simulate:
                             source_file.parent.mkdir(parents=True, exist_ok=True)
                             target_link.replace(source_file)
                         adopted = True
                     else:
                         # Both exist: adopt means replace target with symlink
-                        self._log(1, f"Adopting (replacing): {target_link}")
+                        self._log(1, f"Adopting (replacing): {self._format_path(target_link)}")
                         if not self.simulate:
                             target_link.unlink()
                     # In both cases, continue to create symlink
@@ -270,11 +288,11 @@ class Stow:
                     # Not adopting or not adoptable
                     if not self._should_override(target_link):
                         raise FileExistsError(
-                            f"Target already exists (not owned by this package): {target_link}"
+                            f"Target already exists (not owned by this package): {self._format_path(target_link)}"
                         )
 
                     # Remove existing for override
-                    self._log(2, f"Removing for override: {target_link}")
+                    self._log(2, f"Removing for override: {self._format_path(target_link)}")
                     if not self.simulate:
                         if target_link.is_dir() and not target_link.is_symlink():
                             target_link.rmdir()
@@ -282,7 +300,7 @@ class Stow:
                             target_link.unlink()
 
             # Create symlink
-            self._log(0, f"Stowing: {source_file} -> {target_link}")
+            self._log(0, f"Stowing: {self._format_path(source_file)} -> {self._format_path(target_link)}")
             if not self.simulate:
                 target_link.parent.mkdir(parents=True, exist_ok=True)
                 target_link.symlink_to(source_file)
@@ -301,14 +319,14 @@ class Stow:
 
         for source_file, target_link in self.iter_stow_pairs(package_name):
             if not target_link.is_symlink():
-                self._log(3, f"Not a symlink: {target_link}")
+                self._log(3, f"Not a symlink: {self._format_path(target_link)}")
                 continue
 
             if not self._is_owned_by_package(target_link, package_path):
-                self._log(2, f"Not owned by package: {target_link}")
+                self._log(2, f"Not owned by package: {self._format_path(target_link)}")
                 continue
 
-            self._log(0, f"Unstowing: {target_link}")
+            self._log(0, f"Unstowing: {self._format_path(target_link)}")
             if not self.simulate:
                 target_link.unlink()
 
@@ -359,7 +377,7 @@ def main():
         description="stowpy - A Python implementation of GNU Stow",
         formatter_class=argparse.RawDescriptionHelpFormatter,
     )
-    parser.add_argument("-V", "--version", action="version", version=f"%(prog)s {__version__}")
+    parser.add_argument("-V", "--version", action="version", version=f"%(prog)s {'.'.join(map(str, __version__))}")
 
     parser.add_argument(
         "-d",
