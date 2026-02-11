@@ -1,6 +1,6 @@
 alias ls="ls -F --color=auto --group-directories-first"
 alias ll="ls -lh --time-style=long-iso"
-alias la="ls -A"
+alias la="ls -alh --time-style=long-iso -A"
 
 alias g="git"
 alias gs="git status -s 2>/dev/null"
