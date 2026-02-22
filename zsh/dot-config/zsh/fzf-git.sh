@@ -1,1 +1,1 @@
-../../../ignore-shell/fzf-git.sh
+../../../ignore/shell/fzf-git.sh

@@ -473,8 +473,8 @@ def main():
             # Skip hidden directories
             if item.name.startswith("."):
                 continue
-            # Skip packages starting with "ignore-"
-            if item.name.startswith("ignore-"):
+            # Skip package named "ignore"
+            if item.name == "ignore":
                 stow._log(2, f"Ignoring package: {item.name}")
                 continue
             # Apply ignore pattern to directory names

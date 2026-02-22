@@ -1,1 +1,1 @@
-../../../ignore-shell/alias.sh
+../../../ignore/shell/alias.sh

@@ -1,6 +1,16 @@
-alias ls="ls -F --color=auto --group-directories-first"
-alias ll="ls -lh --time-style=long-iso"
-alias la="ls -alh --time-style=long-iso -A"
+if [[ "$OSTYPE" == "darwin"* ]]; then
+else
+    alias ls="ls -F --color=auto --group-directories-first"
+    alias ll="ls -lh --time-style=long-iso --group-directories-first"
+    alias la="ls -Ah --time-style=long-iso --group-directories-first"
+fi
+
+if command -v eza > /dev/null; then
+    alias ll="eza -lh --git --time-style=long-iso --group-directories-first"
+    alias la="eza -lah --git --time-style=long-iso --group-directories-first"
+    alias tree="eza -al -T"
+fi
+
 
 alias g="git"
 alias gs="git status -s 2>/dev/null"

@@ -8,13 +8,14 @@ ZSH_LOCAL_PREFIX="$HOME/.local/share/zsh"
 HISTFILE="$ZSH_LOCAL_PREFIX/history"
 fpath=($fpath $ZSH_LOCAL_PREFIX/site-functions/)
 
+
+[[ $OSTYPE == "Darwin"* ]] && source "$HOME/.config/zsh/mac.zsh"
 source $HOME/.config/zsh/alias.sh
 
 [[ ! -f "$ZSH_LOCAL_PREFIX/installed" ]] && \
     "$HOME/.config/zsh/install.zsh" && \
     touch "$ZSH_LOCAL_PREFIX/installed"
 
-[[ $(uname -s) == "Darwin" ]] && source "$HOME/.config/zsh/mac.zsh"
 
 CONDA_FORGE_DEFAULT_ROOT="$HOME/.local/miniforge"
 CONDA_FORGE_ROOT="${CONDA_FORGE_ROOT:-$CONDA_FORGE_DEFAULT_ROOT}"
