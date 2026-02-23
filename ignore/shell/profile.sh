@@ -18,3 +18,5 @@ export EDITOR="nvim"
 export GO111MODULE=on
 export GOPROXY=https://goproxy.cn
 export GOPATH=$HOME/.local/gohome
+
+[[ $OSTYPE == "darwin"* ]] && source "$HOME/.config/zsh/mac-env.zsh"

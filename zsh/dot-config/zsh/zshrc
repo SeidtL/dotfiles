@@ -9,7 +9,6 @@ ZSHAREDIR="$HOME/.local/share/zsh"
 HISTFILE="$ZSHAREDIR/history"
 fpath=($fpath $ZSHAREDIR/site-functions/)
 
-[[ $OSTYPE == "Darwin"* ]] && source "$HOME/.config/zsh/mac.zsh"
 
 setopt AUTO_CD
 setopt INTERACTIVE_COMMENTS
