@@ -20,18 +20,8 @@ play = [
     { run = 'vlc "$@"' }
 ]
 
-[open]
-rules = [
-	{ name = "*/", use = [ "open", "edit", "reveal" ] },
-
-	{ mime = "text/*",  use = [ "edit", "reveal" ] },
-	{ mime = "image/*", use = [ "open", "reveal" ] },
-	{ mime = "video/*", use = [ "play", "reveal" ] },
-	{ mime = "audio/*", use = [ "play", "reveal" ] },
-	{ mime = "inode/x-empty", use = [ "edit", "reveal" ] },
-
-	{ mime = "application/json", use = [ "edit", "reveal" ] },
-	{ mime = "*/javascript",     use = [ "edit", "reveal" ] },
-
-	{ name = "*", use = [ "open", "reveal" ] },
+[plugin]
+prepend_fetchers = [
+	{ id = "git", url = "*", run = "git" },
+	{ id = "git", url = "*/", run = "git" },
 ]

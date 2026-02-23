@@ -3,37 +3,46 @@ case $- in
     *) return;;
 esac
 
-ZSH_LOCAL_PREFIX="$HOME/.local/share/zsh"
+ZDOTDIR="$HOME/.config/zsh"
+ZSHAREDIR="$HOME/.local/share/zsh"
 
-HISTFILE="$ZSH_LOCAL_PREFIX/history"
-fpath=($fpath $ZSH_LOCAL_PREFIX/site-functions/)
-
+HISTFILE="$ZSHAREDIR/history"
+fpath=($fpath $ZSHAREDIR/site-functions/)
 
 [[ $OSTYPE == "Darwin"* ]] && source "$HOME/.config/zsh/mac.zsh"
-source $HOME/.config/zsh/alias.sh
 
-[[ ! -f "$ZSH_LOCAL_PREFIX/installed" ]] && \
+setopt AUTO_CD
+setopt INTERACTIVE_COMMENTS
+setopt HIST_FCNTL_LOCK
+setopt HIST_IGNORE_ALL_DUPS
+setopt SHARE_HISTORY
+
+unsetopt AUTO_REMOVE_SLASH
+unsetopt HIST_EXPIRE_DUPS_FIRST
+unsetopt EXTENDED_HISTORY
+
+[[ ! -f "$ZSHAREDIR/installed" ]] && \
     "$HOME/.config/zsh/install.zsh" && \
-    touch "$ZSH_LOCAL_PREFIX/installed"
+    touch "$ZSHAREDIR/installed"
 
 
-CONDA_FORGE_DEFAULT_ROOT="$HOME/.local/miniforge"
-CONDA_FORGE_ROOT="${CONDA_FORGE_ROOT:-$CONDA_FORGE_DEFAULT_ROOT}"
+CONDA_FORGE_DEFAULT_DIR="$HOME/.local/miniforge"
+CONDA_FORGE_DIR="${CONDA_FORGE_DIR:-$CONDA_FORGE_DEFAULT_DIR}"
 function condainit() {
-    eval "$($CONDA_FORGE_ROOT/bin/conda shell.zsh hook)"
+    eval "$($CONDA_FORGE_DIR/bin/conda shell.zsh hook)"
 }
 
 autoload -Uz compinit
-for lib in $ZSH_LOCAL_PREFIX/lib/*.zsh; do
+for lib in $ZSHAREDIR/lib/*.zsh; do
     source $lib 
 done
 
-SHARE_DEFAULT_PATH="/usr/share"
-SHARE_PATH="${SHARE_PATH:-$SHARE_DEFAULT_PATH}"
-for p in "$SHARE_PATH"/zsh-*(N); do 
+SHARE_DEFAULT_DIR="/usr/share"
+SHARE_DIR="${SHARE_DIR:-$SHARE_DEFAULT_DIR}"
+for p in "$SHARE_DIR"/zsh-*(N); do 
     source $p/$(basename $p).zsh; 
 done
-unset SHARE_DEFAULT_PATH SHARE_PATH CONDA_FORGE_DEFAULT_ROOT
+unset SHARE_DEFAULT_DIR SHARE_DIR CONDA_FORGE_DEFAULT_DIR
 
 zstyle ':completion:*' matcher-list '' 'm:{a-z}={A-Z}' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=* l:|=*'
 zstyle ':completion:*' menu select
@@ -42,10 +51,10 @@ zstyle ":completion:*" squeeze-slashes true
 zstyle ":completion:*" file-sort change
 zstyle ':completion:*' list-prompt %SAt %p: Hit TAB for more, or the character to insert%s
 zstyle ':completion:*' select-prompt %SScrolling active: current selection at %p%s
-zstyle ':completion:*' cache-path $ZSH_LOCAL_PREFIX/zcompdumpcache
-compinit -d $ZSH_LOCAL_PREFIX/zcompdump
+zstyle ':completion:*' cache-path $ZSHAREDIR/zcompdumpcache
+compinit -d $ZSHAREDIR/zcompdump
 
-source $ZSH_LOCAL_PREFIX/theme/p10k/powerlevel10k.zsh-theme
+source $ZSHAREDIR/theme/p10k/powerlevel10k.zsh-theme
 [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]] && \
     source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 [[ ! -f $HOME/.p10k.zsh ]] || source $HOME/.p10k.zsh
@@ -60,4 +69,6 @@ fi
 
 command -v zoxide >/dev/null 2>&1 && eval "$(zoxide init zsh)"
 
-unset ZSH_LOCAL_PREFIX
+unset ZSHAREDIR ZDOTDIR
+
+source $HOME/.config/zsh/alias.sh

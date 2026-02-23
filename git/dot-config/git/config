@@ -1,0 +1,17 @@
+[init]
+    defaultBranch = main
+[lfs]
+    concurrenttransfers = 3
+[lfs "customtransfer.xet"]
+    path = git-xet
+    args = transfer
+    concurrent = true
+[pull]
+    rebase = true
+[rebase]
+    autoStash = true
+[merge]
+    tool = code
+[mergetool "code"]
+    cmd = code --wait --merge \"$LOCAL\" \"$REMOTE\" \"$BASE\" \"$MERGED\"
+
