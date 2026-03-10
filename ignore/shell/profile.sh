@@ -1,10 +1,10 @@
 function add_global_path() {
-    case ":$PATH:" in
-    *:"$1":*)
-        ;;
-    *)
-        export PATH="$1:$PATH"
-    esac
+  case ":$PATH:" in
+  *:"$1":*)
+    ;;
+  *)
+    export PATH="$1:$PATH"
+  esac
 }
 add_global_path /usr/bin
 add_global_path $HOME/.local/bin

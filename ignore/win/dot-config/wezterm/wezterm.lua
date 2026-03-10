@@ -1,7 +1,7 @@
 local wezterm = require 'wezterm'
 local cfg = {}
 if wezterm.config_builder then
-    cfg = wezterm.config_builder()
+  cfg = wezterm.config_builder()
 end
 
 -- sys

@@ -2,5 +2,5 @@
 
 [mgr]
 prepend_keymap = [
-    { on = [ "c", "m" ], run = "plugin chmod" },
+  { on = [ "c", "m" ], run = "plugin chmod" },
 ]

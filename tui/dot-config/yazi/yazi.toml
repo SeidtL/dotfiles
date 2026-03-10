@@ -12,12 +12,12 @@ max_height = 1000
 
 [opener]
 edit = [
-    { run = '${EDITOR:=vi} "$@"', desc = "$EDITOR", block = true },
-    { run = 'code "$@"', orphan = true },
+  { run = '${EDITOR:=vi} "$@"', desc = "$EDITOR", block = true },
+  { run = 'code "$@"', orphan = true },
 ]
 play = [
-    { run = 'mpv --force-window "$@"' },
-    { run = 'vlc "$@"' }
+  { run = 'mpv --force-window "$@"' },
+  { run = 'vlc "$@"' }
 ]
 
 [plugin]

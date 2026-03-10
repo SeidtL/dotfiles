@@ -1,18 +1,18 @@
 if command -v eza > /dev/null; then
-    alias ls="eza"
-    alias ll="eza -lh --git --time-style=long-iso --group-directories-first"
-    alias la="eza -lah --git --time-style=long-iso --group-directories-first"
-    alias tree="eza -al -T"
-else 
-    if [[ "$OSTYPE" == "darwin"* ]]; then
-        alias ls="ls -Gp"
-        alias ll="ls -lhG"
-        alias la="ls -alGh"
-    else
-        alias ls="ls -F --color=auto --group-directories-first"
-        alias ll="ls -lh --time-style=long-iso --group-directories-first"
-        alias la="ls -Ah --time-style=long-iso --group-directories-first"
-    fi
+  alias ls="eza"
+  alias ll="eza -lh --git --time-style=long-iso --group-directories-first"
+  alias la="eza -lah --git --time-style=long-iso --group-directories-first"
+  alias tree="eza -al -T"
+else
+  if [[ "$OSTYPE" == "darwin"* ]]; then
+    alias ls="ls -Gp"
+    alias ll="ls -lhG"
+    alias la="ls -alGh"
+  else
+    alias ls="ls -F --color=auto --group-directories-first"
+    alias ll="ls -lh --time-style=long-iso --group-directories-first"
+    alias la="ls -Ah --time-style=long-iso --group-directories-first"
+  fi
 fi
 
 alias g="git"
