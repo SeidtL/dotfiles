@@ -1,5 +1,5 @@
-font-family = MesloLGS NF
 font-family = FiraCode Nerd Font Mono
+font-family = MesloLGS NF
 font-family = Noto Sans CJK SC
 font-size = 16
 
@@ -9,12 +9,15 @@ cursor-style-blink = false
 window-height = 30 
 window-width = 120
 
+font-feature = -liga
+font-feature = -calt
+
 shell-integration-features = no-cursor,no-sudo,title
 gtk-single-instance = true
 
 theme = One Half Dark
 
-background-opacity = 1
+background-opacity = 0.9
 background-blur = false
 
 keybind = ctrl+w>5=new_split:down

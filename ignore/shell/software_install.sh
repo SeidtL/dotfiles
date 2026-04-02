@@ -66,7 +66,7 @@ function install_node() {
     local ASSET="node-${NODE_VERSION}-linux-x64"
     local URL="https://mirrors.ustc.edu.cn/node/${NODE_VERSION}/${ASSET}.tar.xz"
     download "$URL" "${WORKSPACE}/${ASSET}.tar.xz"
-    
+
     tar -xvf "${WORKSPACE}/${ASSET}.tar.xz" -C "${WORKSPACE}"
     rm "${WORKSPACE}/${ASSET}.tar.xz"
 
@@ -78,7 +78,7 @@ function install_golang() {
     local ASSET="go${GOLANG_VERSION}.linux-amd64"
     local URL="https://mirrors.ustc.edu.cn/golang/${ASSET}.tar.gz"
     download "$URL" "${WORKSPACE}/${ASSET}.tar.gz"
-    
+
     tar -xvf "${WORKSPACE}/${ASSET}.tar.gz" -C "${WORKSPACE}"
     rm "${WORKSPACE}/${ASSET}.tar.gz"
 
@@ -93,3 +93,4 @@ install_yazi
 sudo ln -sf /opt/yazi/yazi /usr/local/bin/yazi
 
 install_nvim
+sudo ln -sf /opt/nvim/bin/nvim /usr/local/bin/nvim

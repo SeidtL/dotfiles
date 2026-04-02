@@ -1,4 +1,4 @@
-#!/usr/bin/env zsh
+#!/usr/bin/bash
 set -e
 
 ZSH_PREFIX=$HOME/.local/share/zsh
@@ -11,15 +11,15 @@ function download_omz() {
     download $url $1
 }
 
-# lib 
+# lib
 mkdir -p $ZSH_PREFIX/lib/
 download_omz lib/clipboard.zsh
-download_omz lib/history.zsh 
-download_omz lib/key-bindings.zsh 
-download_omz lib/theme-and-appearance.zsh 
+download_omz lib/history.zsh
+download_omz lib/key-bindings.zsh
+download_omz lib/theme-and-appearance.zsh
 download_omz lib/git.zsh
 
-# theme 
+# theme
 mkdir -p $ZSH_PREFIX/theme/
 rm -rf $ZSH_PREFIX/theme/p10k
 git clone --quiet --depth=1 --branch master --single-branch \
@@ -28,7 +28,7 @@ echo "download p10k"
 
 # site-functions
 mkdir -p $ZSH_PREFIX/site-functions/
-if command -v rustc &>/dev/null; then 
+if command -v rustc &>/dev/null; then
     rust_toolchain=$(rustup default | awk '{print $1}')
     rust_sysroot=$(rustc +"$rust_toolchain" --print sysroot)
     cp $rust_sysroot/share/zsh/site-functions/_cargo $ZSH_PREFIX/site-functions/_cargo

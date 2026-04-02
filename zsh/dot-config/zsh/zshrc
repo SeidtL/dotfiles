@@ -20,11 +20,6 @@ unsetopt AUTO_REMOVE_SLASH
 unsetopt HIST_EXPIRE_DUPS_FIRST
 unsetopt EXTENDED_HISTORY
 
-[[ ! -f "$ZSHAREDIR/installed" ]] && \
-  "$HOME/.config/zsh/install.zsh" && \
-  touch "$ZSHAREDIR/installed"
-
-
 CONDA_FORGE_DEFAULT_DIR="$HOME/.local/miniforge"
 CONDA_FORGE_DIR="${CONDA_FORGE_DIR:-$CONDA_FORGE_DEFAULT_DIR}"
 function condainit() {
