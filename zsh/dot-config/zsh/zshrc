@@ -22,9 +22,10 @@ unsetopt EXTENDED_HISTORY
 
 CONDA_FORGE_DEFAULT_DIR="$HOME/.local/miniforge"
 CONDA_FORGE_DIR="${CONDA_FORGE_DIR:-$CONDA_FORGE_DEFAULT_DIR}"
-function condainit() {
+if [ -d "$CONDA_FORGE_DIR" ]; then
   eval "$($CONDA_FORGE_DIR/bin/conda shell.zsh hook)"
-}
+fi
+unset CONDA_FORGE_DEFAULT_DIR CONDA_FORGE_DIR
 
 autoload -Uz compinit
 for lib in $ZSHAREDIR/lib/*.zsh; do

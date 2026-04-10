@@ -1,7 +1,8 @@
 defaults write -g ApplePressAndHoldEnabled -bool false
 defaults write -g InitialKeyRepeat -int 10
-defaults write -g KeyRepeat -int 2
+defaults write -g KeyRepeat -int 1
 
+defaults write -g AppleScrollerPagingBehavior -bool true
 defaults write -g NSAutomaticCapitalizationEnabled -bool false
 
 defaults write com.apple.dock autohide -bool true
