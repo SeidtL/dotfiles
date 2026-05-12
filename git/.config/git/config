@@ -15,3 +15,6 @@
 [mergetool "code"]
     cmd = code --wait --merge \"$LOCAL\" \"$REMOTE\" \"$BASE\" \"$MERGED\"
 
+[user]
+    name = SeidtL
+    email = SeidtL@163.com

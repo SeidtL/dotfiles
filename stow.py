@@ -63,8 +63,8 @@ class Stow:
             adopt: If True, import existing files from target
 
         Note:
-            Packages starting with "dot-" are always treated as dotfiles,
-            e.g., "dot-vim" becomes ".vim" in the target directory.
+            Dotfiles (e.g., ".bashrc") in packages are stowed directly
+            as dotfiles in the target directory.
         """
         self.stow_dir = stow_dir.expanduser().resolve()
         self.target_dir = target_dir.expanduser().resolve()
@@ -91,31 +91,11 @@ class Stow:
         return str(path)
 
     def _get_package_path(self, package_name: str) -> Path:
-        """Get the full path to a package (actual directory name)."""
+        """Get the full path to a package directory."""
         return self.stow_dir / package_name
-
-    def _get_dot_target_name(self, package_name: str) -> str:
-        """Get the target name for a package (transforming "dot-" to ".")."""
-        if package_name.startswith("dot-"):
-            return "." + package_name[4:]
-        return package_name
-
-    def _transform_dot_path(self, path: Path) -> Path:
-        """Transform a path by converting "dot-" prefixes to "." prefixes."""
-        parts = []
-        for part in path.parts:
-            if part.startswith("dot-"):
-                parts.append("." + part[4:])
-            else:
-                parts.append(part)
-        return Path(*parts)
 
     def _should_ignore(self, path: Path) -> bool:
         """Check if a path should be ignored."""
-        # Ignore files/directories starting with dot
-        if path.name.startswith("."):
-            self._log(3, f"Ignoring dotfile: {self._format_path(path)}")
-            return True
         if self.ignore_pattern:
             if self.ignore_pattern.search(path.name):
                 self._log(3, f"Ignoring: {self._format_path(path)}")
@@ -161,11 +141,7 @@ class Stow:
             for item in self.stow_dir.iterdir():
                 if not item.is_dir():
                     continue
-                pkg_path = item
-                if item.name.startswith("dot-"):
-                    # For "dot-" packages, check against the transformed path
-                    pkg_path = item.parent / ("." + item.name[4:])
-                if self._is_relative_to(resolved, pkg_path):
+                if self._is_relative_to(resolved, item):
                     return item
         except (OSError, ValueError):
             pass
@@ -233,18 +209,8 @@ class Stow:
             # Calculate relative path from package to target
             rel_path = source_file.relative_to(package_path)
 
-            # Transform "dot-" prefixes to "." in the path
-            rel_path = self._transform_dot_path(rel_path)
-
-            # For dotfiles packages ("dot-xxx"), use the transformed package name as a subdirectory
-            # For regular packages, flatten one level (GNU Stow behavior)
-            if package_name.startswith("dot-"):
-                target_pkg_name = self._get_dot_target_name(package_name)
-                target_link = self.target_dir / target_pkg_name / rel_path
-            else:
-                # Regular packages: flatten one level
-                # stow/mypkg/.bashrc -> target/.bashrc
-                target_link = self.target_dir / rel_path
+            # Flatten one level: stow/mypkg/.bashrc -> target/.bashrc
+            target_link = self.target_dir / rel_path
 
             yield source_file, target_link
 
