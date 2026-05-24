@@ -15,8 +15,8 @@
     };
   in {
     homeConfigurations = {
-      "seidtl-linux" = mkHome "x86_64-linux";
-      "seidtl-mac" = mkHome "aarch64-darwin";
+      "linux" = mkHome "x86_64-linux";
+      "mac" = mkHome "aarch64-darwin";
     };
   };
 }

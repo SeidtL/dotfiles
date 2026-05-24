@@ -37,8 +37,12 @@
   ];
 
   imports = [
+    ./git.nix
     ./tmux.nix
     ./zsh.nix
   ];
+
+  home.file.".vimrc".source = config.lib.file.mkOutOfStoreSymlink
+    "${config.home.homeDirectory}/.config/nvim/.vimrc";
   home.stateVersion = "26.05";
 }

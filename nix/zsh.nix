@@ -12,5 +12,6 @@
   xdg.dataFile = with pkgs; {
     "zsh/zsh-autosuggestions".source = "${zsh-autosuggestions}/share/zsh-autosuggestions";
     "zsh/zsh-powerlevel10k".source = "${zsh-powerlevel10k}/share/zsh-powerlevel10k";
+    "zsh/oh-my-zsh".source = "${oh-my-zsh}/share/oh-my-zsh";
   };
 }
