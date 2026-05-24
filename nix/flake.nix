@@ -12,6 +12,9 @@
     mkHome = system: home-manager.lib.homeManagerConfiguration {
       pkgs = nixpkgs.legacyPackages.${system};
       modules = [ ./home.nix ];
+      extraSpecialArgs = {
+        isDarwin = nixpkgs.legacyPackages.${system}.stdenv.isDarwin;
+      };
     };
   in {
     homeConfigurations = {
