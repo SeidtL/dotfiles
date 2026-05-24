@@ -1,10 +1,14 @@
-{ config, pkgs, isDarwin, ... }:
+{ config, pkgs, ... }:
 
-{
-  home.username = "seidtl";
-  home.homeDirectory = if pkgs.stdenv.isDarwin
-    then "/Users/${config.home.username}"
-    else "/home/${config.home.username}";
+let
+  isDarwin = pkgs.stdenv.isDarwin;
+  username = "seidtl";
+  homeDirectory = if pkgs.stdenv.isDarwin
+    then "/Users/${username}"
+    else "/home/${username}";
+in {
+  home.username = username;
+  home.homeDirectory = homeDirectory;
 
   home.packages = with pkgs; [
     git
@@ -40,6 +44,7 @@
     ./git.nix
     ./tmux.nix
     ./zsh.nix
+    ./linux.nix
   ];
 
   home.file.".vimrc".source = config.lib.file.mkOutOfStoreSymlink
