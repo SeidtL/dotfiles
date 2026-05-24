@@ -15,8 +15,8 @@
     };
   in {
     homeConfigurations = {
-      "linux" = mkHome "x86_64-linux";
-      "mac" = mkHome "aarch64-darwin";
+      "Linux" = mkHome "x86_64-linux";
+      "Darwin" = mkHome "aarch64-darwin";
     };
   };
 }
