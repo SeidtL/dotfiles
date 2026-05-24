@@ -38,6 +38,7 @@ in {
 
     nodejs
     go
+    python313
 
     nix-your-shell
   ];
