@@ -7,8 +7,6 @@ ZDOTDIR="$HOME/.config/zsh"
 ZSHAREDIR="$HOME/.local/share/zsh"
 
 HISTFILE="$ZSHAREDIR/history"
-fpath=($fpath $ZSHAREDIR/site-functions/)
-
 
 setopt AUTO_CD
 setopt INTERACTIVE_COMMENTS
@@ -25,13 +23,6 @@ for lib in $ZSHAREDIR/lib/*.zsh; do
   source $lib
 done
 
-SHARE_DEFAULT_DIR="/usr/share"
-SHARE_DIR="${SHARE_DIR:-$SHARE_DEFAULT_DIR}"
-for p in "$SHARE_DIR"/zsh-*(N); do
-  source $p/$(basename $p).zsh;
-done
-unset SHARE_DEFAULT_DIR SHARE_DIR CONDA_FORGE_DEFAULT_DIR
-
 zstyle ':completion:*' matcher-list '' 'm:{a-z}={A-Z}' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=* l:|=*'
 zstyle ':completion:*' menu select
 zstyle ":completion:*" use-cache yes
@@ -42,12 +33,14 @@ zstyle ':completion:*' select-prompt %SScrolling active: current selection at %p
 zstyle ':completion:*' cache-path $ZSHAREDIR/zcompdumpcache
 compinit -d $ZSHAREDIR/zcompdump
 
-source $ZSHAREDIR/theme/p10k/powerlevel10k.zsh-theme
+source $HOME/.local/share/zsh/zsh-powerlevel10k/powerlevel10k.zsh-theme
+source $HOME/.local/share/zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]] && \
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 [[ ! -f $HOME/.p10k.zsh ]] || source $HOME/.p10k.zsh
 
+source $ZDOTDIR/alias.sh
+source $ZDOTDIR/tools.sh
 
 unset ZSHAREDIR ZDOTDIR
 
-source $HOME/.config/zsh/alias.sh

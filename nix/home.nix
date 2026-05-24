@@ -21,6 +21,9 @@
     neovim
     tmux
 
+    zsh-autosuggestions
+    zsh-powerlevel10k
+
     gdb
     cmake
     clang
