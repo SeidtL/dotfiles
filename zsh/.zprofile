@@ -1,1 +1,0 @@
-../ignore/shell/profile.sh

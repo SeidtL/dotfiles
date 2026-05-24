@@ -5,6 +5,5 @@ export HOMEBREW_CORE_GIT_REMOTE="https://mirrors.tuna.tsinghua.edu.cn/git/homebr
 export HOMEBREW_PIP_INDEX_URL="https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple"
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
-
 VOLUMES_DIR="/Volumes/Data"
 SHARE_DIR="/opt/homebrew/share"
