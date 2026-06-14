@@ -27,6 +27,8 @@ in {
     neovim
     tmux
     dust
+    zoxide
+    eza
 
     zsh-autosuggestions
     zsh-powerlevel10k
