@@ -15,6 +15,7 @@ edit = [
 ]
 play = [
   { run = 'mpv --force-window "$@"' },
+  { run = "iina --no-stdin %s" },
   { run = 'vlc "$@"' }
 ]
 
