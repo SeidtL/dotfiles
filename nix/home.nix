@@ -29,6 +29,10 @@ in {
     dust
     zoxide
     eza
+    wget
+    curl 
+    
+    mpv
 
     zsh-autosuggestions
     zsh-powerlevel10k
