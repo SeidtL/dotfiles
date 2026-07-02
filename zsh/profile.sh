@@ -16,8 +16,5 @@ export GO111MODULE=on
 export GOPROXY=https://goproxy.cn
 export GOPATH=$HOME/.local/gohome
 
-if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
-  . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
-fi
 
 [[ $OSTYPE == "darwin"* ]] && source "$HOME/.config/zsh/mac-env.zsh"
