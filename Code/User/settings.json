@@ -1,0 +1,180 @@
+{
+    "editor.fontFamily": "FiraCode Nerd Font Mono, monospace",
+    "editor.fontLigatures": false,
+    "editor.cursorSurroundingLines": 3,
+    "editor.unicodeHighlight.allowedLocales": { "zh-hans": true },
+    "editor.tabSize": 4,
+    "editor.indentSize": "tabSize",
+    "editor.rulers": [80, 120],
+    "editor.stickyScroll.enabled": true,
+    "editor.cursorBlinking": "solid",
+    "editor.cursorWidth": 3,
+    "editor.minimap.maxColumn": 60,
+    "editor.renderWhitespace": "boundary",
+    // "editor.lineNumbers": "relative",
+    "editor.tokenColorCustomizations": {
+        "textMateRules": [
+            { 
+                "scope": "comment", 
+                "settings": { "foreground": "#54d9b7", "fontStyle": "italic" } 
+            },
+            { 
+                "scope": "punctuation.definition.comment",
+                "settings": { "foreground": "#54d9b7", "fontStyle": "" }
+            }
+        ]
+    },
+
+    // Window settings
+    "window.restoreWindows": "none",
+    "window.commandCenter": false,
+    "window.titleBarStyle": "custom",
+
+    // File settings
+    "files.exclude": { "**/._*": true, "venv": true },
+    "files.eol": "\n",
+    "files.insertFinalNewline": true,
+
+    // Terminal settings
+    "terminal.integrated.env.linux": { "PYTHONPATH": "${workspaceFolder}", },
+    "terminal.integrated.env.windows": { "PYTHONPATH": "${workspaceFolder}", },
+    "terminal.integrated.env.osx": { "PYTHONPATH": "${workspaceFolder}", },
+    "terminal.integrated.fontFamily": "FiraCode Nerd Font Mono, monospace",
+    "terminal.integrated.defaultProfile.linux": "zsh",
+
+    // Misc settings
+    "update.mode": "manual",
+    "explorer.copyRelativePathSeparator": "/",
+    "update.showReleaseNotes": false,
+    "settingsSync.ignoredSettings": [
+        "editor.fontSize",
+        "terminal.integrated.fontSize",
+        "java.configuration.maven.userSettings",
+        "clangd.arguments"
+    ],
+    "workbench.editor.pinnedTabSizing": "shrink",
+    "workbench.editor.tabSizingFixedMaxWidth": 130,
+    "workbench.editor.tabSizingFixedMinWidth": 130,
+    "workbench.editor.tabSizing": "fixed",
+    "workbench.editor.enablePreview": true,
+    "workbench.iconTheme": "material-icon-theme",
+    "workbench.colorTheme": "One Dark Pro Night Flat",
+    
+    // Cmake settings
+    "cmake.configureOnOpen": false,
+    "cmake.generator": "Ninja",
+    "cmake.options.statusBarVisibility": "visible",
+    "cmake.showOptionsMovedNotification": false,
+    "cmake.pinnedCommands": [
+        "workbench.action.tasks.configureTaskRunner",
+        "workbench.action.tasks.runTask"
+    ],
+
+    // Clangd settings 
+    "clangd.arguments": [
+        "--fallback-style=Google",
+        "--header-insertion-decorators",
+        "--compile-commands-dir=${workspaceRoot}/build",
+        "--clang-tidy",
+        "--background-index=true",
+        "-j=3"
+    ],
+    "clangd.fallbackFlags": [
+        "-std=c++26",
+        "-Wall"
+    ],
+    "lldb.suppressUpdateNotifications": true,
+
+    // Vim settings
+    "vim.leader": "<space>",
+    "vim.easymotion": true,
+    "vim.incsearch": true,
+    "vim.hlsearch": true,
+    "vim.useSystemClipboard": true,
+    "vim.insertModeKeyBindings": [ { "before": [ "j", "k" ], "after": [ "<Esc>" ] } ],
+    "vim.normalModeKeyBindings": [
+        { "before": [ "H" ], "after": [ "^" ] },
+        { "before": [ "L" ], "after": [ "$" ] },
+        { "before": [ "<leader>", "n" ], "commands": [ ":nohl", ] },
+        { "before": [ "<PageDown>" ], "after": [ "<C-z>", "z", "z" ] },
+        { "before": [ "<PageUp" ], "after": [ "<C-u>", "z", "z" ] },
+        { "before": [ "n" ], "after": [ "n", "z", "z" ] },
+        { "before": [ "N" ], "after": [ "N", "z", "z" ] },
+        { "before": [ "S" ], "commands": [ ":w" ] },
+        { "before": [ "Q" ], "commands": [ ":q" ] },
+        { "before": [ "s", "s" ], "commands": [ ":split", ":wincmd w" ] },
+        { "before": [ "s", "v" ], "commands": [ ":vsplit", ":wincmd w" ] },
+        { "before": [ "s", "q" ], "after": [ "<C-w>", "q" ] },
+        { "before": [ "s", "h" ], "after": [ "<C-w>", "h" ] },
+        { "before": [ "s", "k" ], "after": [ "<C-w>", "k" ] },
+        { "before": [ "s", "j" ], "after": [ "<C-w>", "j" ] },
+        { "before": [ "s", "l" ], "after": [ "<C-w>", "l" ] },
+        { "before": [ "s", "<left>" ], "after": [ "<C-w>", "5", "<" ] },
+        { "before": [ "s", "<right>" ], "after": [ "<C-w>", "5", ">" ] },
+        { "before": [ "s", "<up>" ], "after": [ "<C-w>", "5", "+" ] },
+        { "before": [ "s", "<down>" ], "after": [ "<C-w>", "5", "-" ] },
+        { "before": [ "<leader>", "v" ], "after": [ "<C-v>" ] }
+    ],
+    "extensions.experimental.affinity": { "vscodevim.vim": 1 },
+
+    // Git settings
+    "git.autofetch": "all",
+    "git.autofetchPeriod": 1800,
+    "git.openRepositoryInParentFolders": "never",
+
+    "gitlens.launchpad.indicator.enabled": false,
+    "gitlens.ai.model": "vscode",
+
+    "github.copilot.nextEditSuggestions.enabled": true,
+    "python.condaPath": "conda",
+    "github.copilot.enable": {
+        "*": true,
+        "plaintext": false,
+        "markdown": false,
+        "scminput": false
+    },
+
+    // Python settings
+    "python.analysis.exclude": [ "**/data", ".git" ],
+    "python.REPL.enableREPLSmartSend": false,
+    "python.terminal.executeInFileDir": true,
+    "python.analysis.inlayHints.functionReturnTypes": true,
+    "python.analysis.inlayHints.callArgumentNames": "partial",
+    "python.analysis.inlayHints.variableTypes": true,
+    "python.analysis.inlayHints.pytestParameters": true,
+    "python.analysis.packageIndexDepths": [
+        { "name": "matplotlib", "depth": 3 },
+        { "name": "scipy", "depth": 2 }
+    ],
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.black-formatter"
+    },
+
+    // Go settings
+    "go.toolsManagement.autoUpdate": true,
+
+    // LaTeX settings
+    "latex-workshop.latex.recipes": [
+        { "name": "latexmk", "tools": [ "latexmk" ] },
+        { "name": "pdflatexmk", "tools": [ "pdflatex", "bibtex", "pdflatex", "pdflatex", ] },
+        { "name": "latexmk (xelatex)", "tools": [ "xelatexmk" ] }
+    ],
+    "latex-workshop.latex.autoBuild.run": "never",
+    "latex-workshop.latex.build.forceRecipeUsage": false,
+
+    // JSON settings
+    "[json]": {
+        "editor.formatOnSave": false,
+        "editor.defaultFormatter": null
+    },
+    "[jsonc]": {
+        "editor.formatOnSave": false,
+        "editor.defaultFormatter": null
+    },
+
+    "docker.extension.enableComposeLanguageServer": false,
+    "clangd.path": "/usr/bin/clangd",
+    "claudeCode.preferredLocation": "panel",
+    "claudeCode.selectedModel": "default",
+    "editor.lineNumbers": "relative",
+}
