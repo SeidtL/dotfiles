@@ -31,6 +31,8 @@ in {
     eza
     wget
     curl 
+
+    opencode
     
     mpv
 
