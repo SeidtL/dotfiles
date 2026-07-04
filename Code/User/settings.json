@@ -14,11 +14,11 @@
     // "editor.lineNumbers": "relative",
     "editor.tokenColorCustomizations": {
         "textMateRules": [
-            { 
-                "scope": "comment", 
-                "settings": { "foreground": "#54d9b7", "fontStyle": "italic" } 
+            {
+                "scope": "comment",
+                "settings": { "foreground": "#54d9b7", "fontStyle": "italic" }
             },
-            { 
+            {
                 "scope": "punctuation.definition.comment",
                 "settings": { "foreground": "#54d9b7", "fontStyle": "" }
             }
@@ -59,7 +59,7 @@
     "workbench.editor.enablePreview": true,
     "workbench.iconTheme": "material-icon-theme",
     "workbench.colorTheme": "One Dark Pro Night Flat",
-    
+
     // Cmake settings
     "cmake.configureOnOpen": false,
     "cmake.generator": "Ninja",
@@ -70,7 +70,7 @@
         "workbench.action.tasks.runTask"
     ],
 
-    // Clangd settings 
+    // Clangd settings
     "clangd.arguments": [
         "--fallback-style=Google",
         "--header-insertion-decorators",
@@ -177,4 +177,5 @@
     "claudeCode.preferredLocation": "panel",
     "claudeCode.selectedModel": "default",
     "editor.lineNumbers": "relative",
+    "diffEditor.ignoreTrimWhitespace": false,
 }
