@@ -17,4 +17,4 @@ export GOPROXY=https://goproxy.cn
 export GOPATH=$HOME/.local/gohome
 
 
-[ $OSTYPE == "darwin"* ] && source "$HOME/.config/zsh/mac-env.sh"
+[[ $OSTYPE == "darwin"* ]] && source "$HOME/.config/zsh/mac-env.sh"
