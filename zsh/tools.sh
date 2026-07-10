@@ -15,7 +15,3 @@ if [ -d "$CONDA_FORGE_DIR" ]; then
   eval "$($CONDA_FORGE_DIR/bin/conda shell.zsh hook)"
 fi
 unset CONDA_FORGE_DEFAULT_DIR CONDA_FORGE_DIR
-
-if command -v nix-your-shell >/dev/null 2>&1; then
-  nix-your-shell zsh | source /dev/stdin
-fi

@@ -1,0 +1,29 @@
+[core]
+    editor = "code"
+
+[init]
+    defaultBranch = "main"
+
+[lfs]
+    concurrenttransfers = 3
+
+[lfs "customtransfer.xet"]
+    args = "transfer"
+    concurrent = true
+    path = "git-xet"
+
+[merge]
+    tool = "code"
+
+[mergetool "code"]
+    cmd = "code --wait --merge \"$LOCAL\" \"$REMOTE\" \"$BASE\" \"$MERGED\""
+
+[pull]
+    rebase = true
+
+[rebase]
+    autoStash = true
+
+[user]
+    email = "SeidtL@163.com"
+    name = "SeidtL"

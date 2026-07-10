@@ -1,0 +1,102 @@
+#!/bin/bash
+
+set -e
+
+data_path="$HOME/.local/share"
+cfg_path="$HOME/.config"
+
+if [[ $(uname -s) == "Darwin" ]]; then
+  os_type="mac"
+  brew update
+elif grep -q "Debian" /etc/os-release; then
+  os_type="debian"
+  sudo apt update
+elif grep -q "Arch" /etc/os-release; then
+  os_type="arch"
+  sudo pacman -Syu --noconfirm
+else
+  echo "Unsupported OS"
+  exit 1
+fi
+
+echo "Running init script for $os_type..."
+
+syspkginstall() {
+  local pkgs=("$@")
+  if [[ $os_type == "mac" ]]; then
+    brew install "${pkgs[@]}"
+  elif [[ $os_type == "debian" ]]; then
+    sudo apt install -y "${pkgs[@]}"
+  elif [[ $os_type == "arch" ]]; then
+    sudo pacman -S --noconfirm --needed "${pkgs[@]}"
+  fi
+}
+
+sys_pkgs=(
+  wget
+  curl
+
+  mpv
+  kitty
+
+  ffmpeg
+  jq
+  poppler
+  fzf
+  ripgrep
+  xclip
+  htop
+  zoxide
+  eza
+
+  zsh
+  tmux
+  zsh-autosuggestions
+
+  gdb
+  cmake
+  clang
+  lldb
+)
+
+mac_extra_pkgs=(
+  fd
+  yazi
+)
+
+debian_extra_pkgs=(
+  fd-find
+)
+
+arch_extra_pkgs=(
+  fd
+  yazi
+)
+
+if [[ $os_type == "mac" ]]; then
+  sys_pkgs+=("${mac_extra_pkgs[@]}")
+elif [[ $os_type == "debian" ]]; then
+  sys_pkgs+=("${debian_extra_pkgs[@]}")
+elif [[ $os_type == "arch" ]]; then
+  sys_pkgs+=("${arch_extra_pkgs[@]}")
+fi
+
+syspkginstall "${sys_pkgs[@]}"
+
+file_path="$(dirname "$(realpath "$0")")"
+for file in "$file_path"/*.sh; do
+    if [ -f "$file" ]; then
+        echo "Running $file..."
+        . "$file"
+    fi
+done
+
+ossp_path=$file_path/$os_type
+echo "Running $ossp_path/init..."
+[ -f $ossp_path/init ] && . $ossp_path/init
+for file in "$ossp_path"/*.sh; do
+    if [ -f "$file" ]; then
+        echo "Running $file..."
+        . "$file"
+    fi
+done
