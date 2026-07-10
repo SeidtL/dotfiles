@@ -61,12 +61,14 @@ mac_extra_pkgs=(
   yazi
   rustup
   openjdk
+  sevenzip
 )
 linux_extra_pkgs=(
   clang
   lldb
   gdb
   kitty
+  7zip
 )
 
 debian_extra_pkgs=(
