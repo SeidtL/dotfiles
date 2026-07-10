@@ -37,7 +37,6 @@ sys_pkgs=(
   curl
 
   mpv
-  kitty
 
   ffmpeg
   jq
@@ -54,7 +53,6 @@ sys_pkgs=(
   zsh-autosuggestions
 
   cmake
-  openjdk
   gradle
 )
 
@@ -62,21 +60,25 @@ mac_extra_pkgs=(
   fd
   yazi
   rustup
+  openjdk
 )
 linux_extra_pkgs=(
   clang
   lldb
   gdb
+  kitty
 )
 
 debian_extra_pkgs=(
   fd-find
+  openjdk
 )
 
 arch_extra_pkgs=(
   fd
   yazi
   rustup
+  openjdk-src
 )
 debian_extra_pkgs+=("${linux_extra_pkgs[@]}")
 arch_extra_pkgs+=("${linux_extra_pkgs[@]}")
