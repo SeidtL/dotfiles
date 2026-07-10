@@ -4,12 +4,13 @@ rm -rf $HOME/.zshrc $HOME/.zshenv $HOME/.zprofile $HOME/.zsh_history
 echo "source $HOME/.config/zsh/zshrc" > $HOME/.zshrc
 echo "source $HOME/.config/zsh/profile.sh"  > $HOME/.zprofile
 
-declare -A syspkg_zsh_paths=(
-  ["mac"]="/opt/homebrew/share"
-  ["debian"]="/usr/share/zsh/plugins"
-  ["arch"]="/usr/share/zsh/plugins"
-)
-zsh_sys_path="${syspkg_zsh_paths[$os_type]}"
+if [[ "$os_type" == "mac" ]]; then
+    zsh_sys_path="/opt/homebrew/share"
+elif [[ "$os_type" == "debian" ]]; then
+    zsh_sys_path="/usr/share/zsh/plugins"
+elif [[ "$os_type" == "arch" ]]; then
+    zsh_sys_path="/usr/share/zsh/plugins"
+fi
 
 zsh_data_path="$data_path/zsh"
 mkdir -p $zsh_data_path

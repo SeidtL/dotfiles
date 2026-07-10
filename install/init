@@ -24,7 +24,7 @@ echo "Running init script for $os_type..."
 syspkginstall() {
   local pkgs=("$@")
   if [[ $os_type == "mac" ]]; then
-    brew install "${pkgs[@]}"
+    brew install --quiet -y "${pkgs[@]}"
   elif [[ $os_type == "debian" ]]; then
     sudo apt install -y "${pkgs[@]}"
   elif [[ $os_type == "arch" ]]; then
@@ -53,15 +53,20 @@ sys_pkgs=(
   tmux
   zsh-autosuggestions
 
-  gdb
   cmake
-  clang
-  lldb
+  openjdk
+  gradle
 )
 
 mac_extra_pkgs=(
   fd
   yazi
+  rustup
+)
+linux_extra_pkgs=(
+  clang
+  lldb
+  gdb
 )
 
 debian_extra_pkgs=(
@@ -71,7 +76,10 @@ debian_extra_pkgs=(
 arch_extra_pkgs=(
   fd
   yazi
+  rustup
 )
+debian_extra_pkgs+=("${linux_extra_pkgs[@]}")
+arch_extra_pkgs+=("${linux_extra_pkgs[@]}")
 
 if [[ $os_type == "mac" ]]; then
   sys_pkgs+=("${mac_extra_pkgs[@]}")
@@ -82,6 +90,7 @@ elif [[ $os_type == "arch" ]]; then
 fi
 
 syspkginstall "${sys_pkgs[@]}"
+unset sys_pkgs mac_extra_pkgs linux_extra_pkgs debian_extra_pkgs arch_extra_pkgs
 
 file_path="$(dirname "$(realpath "$0")")"
 for file in "$file_path"/*.sh; do
@@ -94,9 +103,13 @@ done
 ossp_path=$file_path/$os_type
 echo "Running $ossp_path/init..."
 [ -f $ossp_path/init ] && . $ossp_path/init
+
 for file in "$ossp_path"/*.sh; do
     if [ -f "$file" ]; then
         echo "Running $file..."
         . "$file"
     fi
 done
+unset file_path ossp_path
+
+unset data_path cfg_path os_type
