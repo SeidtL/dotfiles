@@ -40,7 +40,6 @@ sys_pkgs=(
 
   ffmpeg
   jq
-  poppler
   fzf
   ripgrep
   xclip
@@ -62,6 +61,7 @@ mac_extra_pkgs=(
   rustup
   openjdk
   sevenzip
+  poppler
 )
 linux_extra_pkgs=(
   clang
@@ -74,6 +74,7 @@ linux_extra_pkgs=(
 debian_extra_pkgs=(
   fd-find
   openjdk
+  poppler-utils
 )
 
 arch_extra_pkgs=(
@@ -81,6 +82,7 @@ arch_extra_pkgs=(
   yazi
   rustup
   openjdk-src
+  poppler
 )
 debian_extra_pkgs+=("${linux_extra_pkgs[@]}")
 arch_extra_pkgs+=("${linux_extra_pkgs[@]}")
