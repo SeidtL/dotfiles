@@ -18,3 +18,5 @@ sudo mkdir -p /opt/yazi
 sudo cp -r . /opt/yazi/
 sudo ln -sf /opt/yazi/yazi /usr/local/bin/yazi
 sudo ln -sf /opt/yazi/ya /usr/local/bin/ya
+
+ya pkg install
