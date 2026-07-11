@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/zsh
 
 pkgs=(
   ttf-firacode-nerd

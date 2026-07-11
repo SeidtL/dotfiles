@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/zsh
 
 rm -rf $HOME/.zshrc $HOME/.zshenv $HOME/.zprofile $HOME/.zsh_history
 echo "source $HOME/.config/zsh/zshrc" > $HOME/.zshrc

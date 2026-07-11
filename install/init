@@ -2,8 +2,6 @@
 
 set -e
 
-data_path="$HOME/.local/share"
-cfg_path="$HOME/.config"
 
 if [[ $(uname -s) == "Darwin" ]]; then
   os_type="mac"
@@ -11,113 +9,16 @@ if [[ $(uname -s) == "Darwin" ]]; then
 elif grep -q "Debian" /etc/os-release; then
   os_type="debian"
   sudo apt update
+  sudo apt install -y zsh
 elif grep -q "Arch" /etc/os-release; then
   os_type="arch"
   sudo pacman -Syu --noconfirm
+  sudo pacman -S --noconfirm --needed zsh
 else
   echo "Unsupported OS"
   exit 1
 fi
-
-echo "Running init script for $os_type..."
-
-syspkginstall() {
-  local pkgs=("$@")
-  if [[ $os_type == "mac" ]]; then
-    brew install --quiet -y "${pkgs[@]}"
-  elif [[ $os_type == "debian" ]]; then
-    sudo apt install -y "${pkgs[@]}"
-  elif [[ $os_type == "arch" ]]; then
-    sudo pacman -S --noconfirm --needed "${pkgs[@]}"
-  fi
-}
-
-sys_pkgs=(
-  wget
-  curl
-
-  mpv
-
-  ffmpeg
-  jq
-  fzf
-  ripgrep
-  xclip
-  htop
-  zoxide
-  eza
-  unzip
-  zip
-
-  zsh
-  tmux
-  zsh-autosuggestions
-
-  cmake
-  gradle
-)
-
-mac_extra_pkgs=(
-  fd
-  yazi
-  rustup
-  openjdk
-  sevenzip
-  poppler
-)
-linux_extra_pkgs=(
-  clang
-  lldb
-  gdb
-  kitty
-  7zip
-)
-
-debian_extra_pkgs=(
-  fd-find
-  openjdk
-  poppler-utils
-)
-
-arch_extra_pkgs=(
-  fd
-  yazi
-  rustup
-  openjdk-src
-  poppler
-)
-debian_extra_pkgs+=("${linux_extra_pkgs[@]}")
-arch_extra_pkgs+=("${linux_extra_pkgs[@]}")
-
-if [[ $os_type == "mac" ]]; then
-  sys_pkgs+=("${mac_extra_pkgs[@]}")
-elif [[ $os_type == "debian" ]]; then
-  sys_pkgs+=("${debian_extra_pkgs[@]}")
-elif [[ $os_type == "arch" ]]; then
-  sys_pkgs+=("${arch_extra_pkgs[@]}")
-fi
-
-syspkginstall "${sys_pkgs[@]}"
-unset sys_pkgs mac_extra_pkgs linux_extra_pkgs debian_extra_pkgs arch_extra_pkgs
-
 file_path="$(dirname "$(realpath "$0")")"
-for file in "$file_path"/*.sh; do
-    if [ -f "$file" ]; then
-        echo "Running $file..."
-        . "$file"
-    fi
-done
 
-ossp_path=$file_path/$os_type
-echo "Running $ossp_path/init..."
-[ -f $ossp_path/init ] && . $ossp_path/init
-
-for file in "$ossp_path"/*.sh; do
-    if [ -f "$file" ]; then
-        echo "Running $file..."
-        . "$file"
-    fi
-done
-unset file_path ossp_path
-
-unset data_path cfg_path os_type
+export os_type file_path
+exec $file_path/proxy

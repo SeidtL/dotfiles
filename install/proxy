@@ -1,0 +1,78 @@
+#!/bin/zsh
+set -e
+echo "Running init script for $os_type..."
+
+data_path="$HOME/.local/share"
+cfg_path="$HOME/.config"
+
+syspkginstall() {
+  local pkgs=("$@")
+  if [[ $os_type == "mac" ]]; then
+    brew install --quiet -y "${pkgs[@]}"
+  elif [[ $os_type == "debian" ]]; then
+    sudo apt install -y "${pkgs[@]}"
+  elif [[ $os_type == "arch" ]]; then
+    sudo pacman -S --noconfirm --needed "${pkgs[@]}"
+  fi
+}
+
+pkgs=(
+  wget
+  curl
+  mpv
+  ffmpeg
+  jq
+  fzf
+  ripgrep
+  xclip
+  htop
+  zoxide
+  eza
+  unzip
+  zip
+  tmux
+  zsh-autosuggestions
+  cmake
+  gradle
+)
+
+groups=(
+  "fd:fd-find:fd"
+  "yazi::yazi"
+  "rustup::rustup"
+  "openjdk:openjdk:openjdk-src"
+  "sevenzip:7zip:7zip"
+  "poppler:poppler-utils:poppler"
+  ":clang lldb gdb:clang lldb gdb"
+  ":kitty:kitty"
+)
+
+
+typeset -A cols; cols=(mac 1 debian 2 arch 3)
+for g in "${groups[@]}"; do
+  parts=("${(@s.:.)g}")
+  pkgs+=($parts[$cols[$os_type]])
+done
+syspkginstall "${pkgs[@]}"
+unset pkgs groups cols g parts
+
+for file in "$file_path"/*.sh; do
+    if [ -f "$file" ]; then
+        echo "Running $file..."
+        . "$file"
+    fi
+done
+
+ossp_path=$file_path/$os_type
+echo "Running $ossp_path/init..."
+[ -f $ossp_path/init ] && . $ossp_path/init
+
+for file in "$ossp_path"/*.sh; do
+    if [ -f "$file" ]; then
+        echo "Running $file..."
+        . "$file"
+    fi
+done
+unset file_path ossp_path
+
+unset data_path cfg_path os_type

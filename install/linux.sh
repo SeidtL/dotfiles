@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/zsh
 if [[ $(uname -s) == "Darwin" ]]; then
   return 0
 fi

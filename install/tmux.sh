@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/zsh
 
 mkdir -p $cfg_path/tmux
 rm -rf $cfg_path/tmux/.tmux.conf

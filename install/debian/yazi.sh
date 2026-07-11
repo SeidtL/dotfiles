@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/zsh
 if command -v yazi >/dev/null 2>&1; then
   return 0
 fi

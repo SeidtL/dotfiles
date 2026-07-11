@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/zsh
 
 pkgs=(
   font-noto-sans-cjk-sc
