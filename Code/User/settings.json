@@ -178,4 +178,5 @@
     "claudeCode.selectedModel": "default",
     "editor.lineNumbers": "relative",
     "diffEditor.ignoreTrimWhitespace": false,
+    "git.confirmSync": false,
 }

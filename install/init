@@ -46,6 +46,8 @@ sys_pkgs=(
   htop
   zoxide
   eza
+  unzip
+  zip
 
   zsh
   tmux
