@@ -43,8 +43,11 @@ groups=(
   "openjdk:openjdk:openjdk-src"
   "sevenzip:7zip:7zip"
   "poppler:poppler-utils:poppler"
-  ":clang lldb gdb:clang lldb gdb"
+  ":clang:clang"
+  ":lldb:lldb"
+  ":gdb:gdb"
   ":kitty:kitty"
+  "::neovim"
 )
 
 
