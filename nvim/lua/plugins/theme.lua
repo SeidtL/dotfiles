@@ -2,7 +2,7 @@ return {
   {
     "folke/tokyonight.nvim",
     opts = {
-      style = "moon", -- 保持 moon 风格
+      style = "moon",
       styles = {
         comments = { italic = false },
         keywords = { italic = false },
