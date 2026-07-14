@@ -24,6 +24,7 @@ source $ZSHAREDIR/oh-my-zsh/lib/git.zsh
 source $ZSHAREDIR/oh-my-zsh/lib/history.zsh
 source $ZSHAREDIR/oh-my-zsh/lib/key-bindings.zsh
 source $ZSHAREDIR/oh-my-zsh/lib/theme-and-appearance.zsh
+source $ZSHAREDIR/oh-my-zsh/lib/async_prompt.zsh
 
 zstyle ':completion:*' matcher-list '' 'm:{a-z}={A-Z}' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=* l:|=*'
 zstyle ':completion:*' menu select
@@ -35,12 +36,9 @@ zstyle ':completion:*' select-prompt %SScrolling active: current selection at %p
 zstyle ':completion:*' cache-path $ZSHAREDIR/zcompdumpcache
 compinit -d $ZSHAREDIR/zcompdump
 
-source $ZSHAREDIR/zsh-powerlevel10k/powerlevel10k.zsh-theme
 source $ZSHAREDIR/zsh-autosuggestions/zsh-autosuggestions.zsh
-[[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]] && \
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-[[ ! -f $HOME/.p10k.zsh ]] || source $HOME/.p10k.zsh
 
+source $ZDOTDIR/theme.sh
 source $ZDOTDIR/alias.sh
 source $ZDOTDIR/tools.sh
 
