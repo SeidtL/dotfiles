@@ -2,23 +2,13 @@
 
 set -e
 
-
 if [[ $(uname -s) == "Darwin" ]]; then
-  os_type="mac"
   brew update
-elif grep -q "Debian" /etc/os-release; then
-  os_type="debian"
+else
   sudo apt update
   sudo apt install -y zsh
-elif grep -q "Arch" /etc/os-release; then
-  os_type="arch"
-  sudo pacman -Syu --noconfirm
-  sudo pacman -S --noconfirm --needed zsh
-else
-  echo "Unsupported OS"
-  exit 1
 fi
 file_path="$(dirname "$(realpath "$0")")"
 
-export os_type file_path
+export file_path
 exec $file_path/proxy

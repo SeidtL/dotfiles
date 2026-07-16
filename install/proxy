@@ -1,20 +1,19 @@
 #!/bin/zsh
 set -e
-echo "Running init script for $os_type..."
 
-data_path="$HOME/.local/share"
-cfg_path="$HOME/.config"
+os_type=$(uname -s);
 
-syspkginstall() {
-  local pkgs=("$@")
-  if [[ $os_type == "mac" ]]; then
-    brew install --quiet -y "${pkgs[@]}"
-  elif [[ $os_type == "debian" ]]; then
-    sudo apt install -y "${pkgs[@]}"
-  elif [[ $os_type == "arch" ]]; then
-    sudo pacman -S --noconfirm --needed "${pkgs[@]}"
-  fi
-}
+if [[ $os_type == "Darwin" ]]; then
+  alias pkg_install="brew install --quiet -y";
+  pkg_index=1;
+elif [[ $os_type == "Linux" ]]; then
+  alias pkg_install="sudo apt install -y";
+  pkg_index=2;
+fi
+echo "Running init script for $os_type...";
+
+data_path="$HOME/.local/share";
+cfg_path="$HOME/.config";
 
 pkgs=(
   wget
@@ -36,28 +35,29 @@ pkgs=(
   gradle
 )
 
+
 groups=(
-  "fd:fd-find:fd"
-  "yazi::yazi"
-  "rustup::rustup"
-  "openjdk:openjdk:openjdk-src"
-  "sevenzip:7zip:7zip"
-  "poppler:poppler-utils:poppler"
-  ":clang:clang"
-  ":lldb:lldb"
-  ":gdb:gdb"
-  ":kitty:kitty"
-  "::neovim"
+  "fd:fd-find"
+  "yazi:"
+  "rustup:"
+  "openjdk:openjdk"
+  "sevenzip:7zip"
+  "poppler:poppler-utils"
+  ":clang"
+  ":lldb"
+  ":gdb"
+  ":kitty"
+  "neovim:"
 )
 
 
-typeset -A cols; cols=(mac 1 debian 2 arch 3)
 for g in "${groups[@]}"; do
   parts=("${(@s.:.)g}")
-  pkgs+=($parts[$cols[$os_type]])
+  [[ -n $parts[$pkg_index] ]] && pkgs+=($parts[$pkg_index])
 done
-syspkginstall "${pkgs[@]}"
-unset pkgs groups cols g parts
+pkg_install "${pkgs[@]}"
+unset pkgs groups parts g
+unalias pkg_install 
 
 for file in "$file_path"/*.sh; do
     if [ -f "$file" ]; then
