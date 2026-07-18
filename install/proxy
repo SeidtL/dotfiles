@@ -1,7 +1,7 @@
 #!/bin/zsh
 set -e
 
-if [[ $(uname -s)== "Darwin" ]]; then
+if [[ $(uname -s) == "Darwin" ]]; then
   alias pkg_install="brew install --quiet -y";
   pkg_index=1;
 elif [[ $(uname -s) == "Linux" ]]; then
