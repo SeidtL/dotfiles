@@ -1,16 +1,14 @@
 #!/bin/zsh
 set -e
 
-os_type=$(uname -s);
-
-if [[ $os_type == "Darwin" ]]; then
+if [[ $(uname -s)== "Darwin" ]]; then
   alias pkg_install="brew install --quiet -y";
   pkg_index=1;
-elif [[ $os_type == "Linux" ]]; then
+elif [[ $(uname -s) == "Linux" ]]; then
   alias pkg_install="sudo apt install -y";
   pkg_index=2;
 fi
-echo "Running init script for $os_type...";
+echo "Running init script for $(uname -s)...";
 
 data_path="$HOME/.local/share";
 cfg_path="$HOME/.config";
@@ -66,7 +64,7 @@ for file in "$file_path"/*.sh; do
     fi
 done
 
-ossp_path=$file_path/$os_type
+ossp_path=$file_path/$(uname -s)
 echo "Running $ossp_path/init..."
 [ -f $ossp_path/init ] && . $ossp_path/init
 
@@ -78,4 +76,4 @@ for file in "$ossp_path"/*.sh; do
 done
 unset file_path ossp_path
 
-unset data_path cfg_path os_type
+unset data_path cfg_path 

@@ -1,14 +1,12 @@
 #!/bin/zsh
 
 rm -rf $HOME/.zshrc $HOME/.zshenv $HOME/.zprofile $HOME/.zsh_history
-echo "source $HOME/.config/zsh/zshrc" > $HOME/.zshrc
-echo "source $HOME/.config/zsh/profile.sh"  > $HOME/.zprofile
+echo 'source $HOME/.config/zsh/zshrc' > $HOME/.zshrc
+echo 'source $HOME/.config/zsh/profile.sh'  > $HOME/.zprofile
 
-if [[ "$os_type" == "mac" ]]; then
+if [[ $(uname -s) == "Darwin" ]]; then
     zsh_sys_path="/opt/homebrew/share"
-elif [[ "$os_type" == "debian" ]]; then
-    zsh_sys_path="/usr/share/zsh/plugins"
-elif [[ "$os_type" == "arch" ]]; then
+else
     zsh_sys_path="/usr/share/zsh/plugins"
 fi
 
