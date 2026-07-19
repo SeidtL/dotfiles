@@ -1,4 +1,4 @@
-if command -v eza > /dev/null; then
+if command -v eza >/dev/null; then
   alias ls="eza"
   alias ll="eza -lh --git --time-style=long-iso --group-directories-first"
   alias la="eza -lah --git --time-style=long-iso --group-directories-first"
@@ -27,6 +27,10 @@ alias gd="git diff"
 alias gds="git diff --staged"
 alias gdw="git diff --word-diff"
 alias gdws="git diff --word-diff --staged"
+alias gdp='_gdp() { gd HEAD~$1; }; _gdp'
+alias gdsp='_gdsp() { gds HEAD~$1; }; _gdsp'
+alias gdwp='_gdwp() { gdw HEAD~$1; }; _gdwp'
+alias gdwsp='_gdwsp() { gdps HEAD~$1 }; _gdwsp'
 
 alias gw="git worktree"
 alias gwa="git worktree add"
@@ -38,7 +42,6 @@ alias gcl="git clone"
 alias gcls="git clone --depth 1 --single-branch"
 alias gf="git fetch"
 alias gr="git rebase"
-
 alias ipython="python3 -m IPython"
 
 alias wopen="/mnt/c/Windows/explorer.exe"
